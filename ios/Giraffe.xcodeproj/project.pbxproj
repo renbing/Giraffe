@@ -1,0 +1,650 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BE0A124B166B5B01004ADDB5 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BE0A124A166B5B01004ADDB5 /* libz.dylib */; };
+		BE2F4C7C16C10F4F000B2AB0 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2F4C7A16C10F4F000B2AB0 /* libcurl.a */; };
+		BE2F4C7D16C10F4F000B2AB0 /* libjs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BE2F4C7B16C10F4F000B2AB0 /* libjs.a */; };
+		BE2F4CC016C10F5E000B2AB0 /* js.msg in Resources */ = {isa = PBXBuildFile; fileRef = BE2F4C8F16C10F5E000B2AB0 /* js.msg */; };
+		BE2F4CC116C10F5E000B2AB0 /* jsatom.tbl in Resources */ = {isa = PBXBuildFile; fileRef = BE2F4C9316C10F5E000B2AB0 /* jsatom.tbl */; };
+		BE2F4CC216C10F5E000B2AB0 /* jsproto.tbl in Resources */ = {isa = PBXBuildFile; fileRef = BE2F4C9F16C10F5E000B2AB0 /* jsproto.tbl */; };
+		BE2F4CD316C1FD5D000B2AB0 /* XMLHttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2F4CD116C1FD5D000B2AB0 /* XMLHttpRequest.cpp */; };
+		BE2F4CD616C1FD7B000B2AB0 /* Http.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2F4CD416C1FD7B000B2AB0 /* Http.cpp */; };
+		BE307D1F167F6752006D7CA7 /* JSCContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE307D1D167F6752006D7CA7 /* JSCContext.cpp */; };
+		BE719A6616A2977300A8E0E0 /* MovieClip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE719A6516A2977300A8E0E0 /* MovieClip.cpp */; };
+		BE876113167DB4F100F0AFF3 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE87610A167DB4F000F0AFF3 /* AppDelegate.mm */; };
+		BE876115167DB4F100F0AFF3 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE87610E167DB4F100F0AFF3 /* EAGLView.m */; };
+		BE876117167DB4F100F0AFF3 /* RootViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE876112167DB4F100F0AFF3 /* RootViewController.mm */; };
+		BE876125167DB5AA00F0AFF3 /* Image.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE87611B167DB5AA00F0AFF3 /* Image.cpp */; };
+		BE876126167DB5AA00F0AFF3 /* MatrixUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE87611D167DB5AA00F0AFF3 /* MatrixUtil.cpp */; };
+		BE876129167DB5AA00F0AFF3 /* RenderContextGL2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE876123167DB5AA00F0AFF3 /* RenderContextGL2.cpp */; };
+		BE87612B167DB5ED00F0AFF3 /* Image.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE87612A167DB5ED00F0AFF3 /* Image.mm */; };
+		BE876131167DB63800F0AFF3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE87612C167DB63800F0AFF3 /* Default-568h@2x.png */; };
+		BE876132167DB63800F0AFF3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BE87612D167DB63800F0AFF3 /* Default.png */; };
+		BE876133167DB63800F0AFF3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE87612E167DB63800F0AFF3 /* Default@2x.png */; };
+		BE876134167DB63800F0AFF3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE876130167DB63800F0AFF3 /* main.m */; };
+		BE876140167DB88500F0AFF3 /* Point.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE87613E167DB88500F0AFF3 /* Point.cpp */; };
+		BE95A51D165D384900E27B06 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE95A51C165D384900E27B06 /* OpenGLES.framework */; };
+		BEA162BD165D236200855D49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA162BC165D236200855D49 /* UIKit.framework */; };
+		BEA162BF165D236200855D49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA162BE165D236200855D49 /* Foundation.framework */; };
+		BEA162C1165D236200855D49 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA162C0165D236200855D49 /* CoreGraphics.framework */; };
+		BEAD663D1674376400A2737A /* resource in Resources */ = {isa = PBXBuildFile; fileRef = BEAD663C1674376400A2737A /* resource */; };
+		BEAD664E16747EC000A2737A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEAD664D16747EC000A2737A /* QuartzCore.framework */; };
+		BEBFA13516D7536E00AA9736 /* Audio.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA13416D7536E00AA9736 /* Audio.mm */; };
+		BEBFA13716D7580900AA9736 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEBFA13616D7580900AA9736 /* AVFoundation.framework */; };
+		BEC8AC5616DC6B7A008AF541 /* JSCContext.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEC8AC5516DC6B79008AF541 /* JSCContext.mm */; };
+		BECC6D8E1692A10200190D12 /* stringutil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BECC6D8C1692A10200190D12 /* stringutil.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		BE0A124A166B5B01004ADDB5 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		BE2F4C7A16C10F4F000B2AB0 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = lib/libcurl.a; sourceTree = "<group>"; };
+		BE2F4C7B16C10F4F000B2AB0 /* libjs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs.a; path = lib/libjs.a; sourceTree = "<group>"; };
+		BE2F4C8016C10F5E000B2AB0 /* BitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitArray.h; sourceTree = "<group>"; };
+		BE2F4C8216C10F5E000B2AB0 /* Barrier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Barrier.h; sourceTree = "<group>"; };
+		BE2F4C8316C10F5E000B2AB0 /* Heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heap.h; sourceTree = "<group>"; };
+		BE2F4C8416C10F5E000B2AB0 /* Root.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Root.h; sourceTree = "<group>"; };
+		BE2F4C8516C10F5E000B2AB0 /* Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statistics.h; sourceTree = "<group>"; };
+		BE2F4C8616C10F5E000B2AB0 /* StoreBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StoreBuffer.h; sourceTree = "<group>"; };
+		BE2F4C8816C10F5E000B2AB0 /* HashTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashTable.h; sourceTree = "<group>"; };
+		BE2F4C8916C10F5E000B2AB0 /* LegacyIntTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegacyIntTypes.h; sourceTree = "<group>"; };
+		BE2F4C8A16C10F5E000B2AB0 /* MemoryMetrics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MemoryMetrics.h; sourceTree = "<group>"; };
+		BE2F4C8B16C10F5E000B2AB0 /* TemplateLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplateLib.h; sourceTree = "<group>"; };
+		BE2F4C8C16C10F5E000B2AB0 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		BE2F4C8D16C10F5E000B2AB0 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		BE2F4C8E16C10F5E000B2AB0 /* js-config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "js-config.h"; sourceTree = "<group>"; };
+		BE2F4C8F16C10F5E000B2AB0 /* js.msg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = js.msg; sourceTree = "<group>"; };
+		BE2F4C9016C10F5E000B2AB0 /* jsalloc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsalloc.h; sourceTree = "<group>"; };
+		BE2F4C9116C10F5E000B2AB0 /* jsapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsapi.h; sourceTree = "<group>"; };
+		BE2F4C9216C10F5E000B2AB0 /* jsatom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsatom.h; sourceTree = "<group>"; };
+		BE2F4C9316C10F5E000B2AB0 /* jsatom.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jsatom.tbl; sourceTree = "<group>"; };
+		BE2F4C9416C10F5E000B2AB0 /* jsclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsclass.h; sourceTree = "<group>"; };
+		BE2F4C9516C10F5E000B2AB0 /* jsclist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsclist.h; sourceTree = "<group>"; };
+		BE2F4C9616C10F5E000B2AB0 /* jscpucfg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jscpucfg.h; sourceTree = "<group>"; };
+		BE2F4C9716C10F5E000B2AB0 /* jsdbgapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsdbgapi.h; sourceTree = "<group>"; };
+		BE2F4C9816C10F5E000B2AB0 /* jsdhash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsdhash.h; sourceTree = "<group>"; };
+		BE2F4C9916C10F5E000B2AB0 /* jsfriendapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsfriendapi.h; sourceTree = "<group>"; };
+		BE2F4C9A16C10F5E000B2AB0 /* jsgc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsgc.h; sourceTree = "<group>"; };
+		BE2F4C9B16C10F5E000B2AB0 /* jslock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jslock.h; sourceTree = "<group>"; };
+		BE2F4C9C16C10F5E000B2AB0 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		BE2F4C9D16C10F5E000B2AB0 /* jsperf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsperf.h; sourceTree = "<group>"; };
+		BE2F4C9E16C10F5E000B2AB0 /* jsprf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsprf.h; sourceTree = "<group>"; };
+		BE2F4C9F16C10F5E000B2AB0 /* jsproto.tbl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = jsproto.tbl; sourceTree = "<group>"; };
+		BE2F4CA016C10F5E000B2AB0 /* jsproxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsproxy.h; sourceTree = "<group>"; };
+		BE2F4CA116C10F5E000B2AB0 /* jsprvtd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsprvtd.h; sourceTree = "<group>"; };
+		BE2F4CA216C10F5E000B2AB0 /* jspubtd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jspubtd.h; sourceTree = "<group>"; };
+		BE2F4CA316C10F5E000B2AB0 /* jstypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jstypes.h; sourceTree = "<group>"; };
+		BE2F4CA416C10F5E000B2AB0 /* jsutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsutil.h; sourceTree = "<group>"; };
+		BE2F4CA516C10F5E000B2AB0 /* jsval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsval.h; sourceTree = "<group>"; };
+		BE2F4CA616C10F5E000B2AB0 /* jsversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsversion.h; sourceTree = "<group>"; };
+		BE2F4CA716C10F5E000B2AB0 /* jswrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jswrapper.h; sourceTree = "<group>"; };
+		BE2F4CA916C10F5E000B2AB0 /* Assertions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Assertions.h; sourceTree = "<group>"; };
+		BE2F4CAA16C10F5E000B2AB0 /* Attributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Attributes.h; sourceTree = "<group>"; };
+		BE2F4CAB16C10F5E000B2AB0 /* BloomFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BloomFilter.h; sourceTree = "<group>"; };
+		BE2F4CAC16C10F5E000B2AB0 /* CheckedInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CheckedInt.h; sourceTree = "<group>"; };
+		BE2F4CAD16C10F5E000B2AB0 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		BE2F4CAE16C10F5E000B2AB0 /* FloatingPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FloatingPoint.h; sourceTree = "<group>"; };
+		BE2F4CAF16C10F5E000B2AB0 /* GuardObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuardObjects.h; sourceTree = "<group>"; };
+		BE2F4CB016C10F5E000B2AB0 /* HashFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HashFunctions.h; sourceTree = "<group>"; };
+		BE2F4CB116C10F5E000B2AB0 /* Likely.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Likely.h; sourceTree = "<group>"; };
+		BE2F4CB216C10F5E000B2AB0 /* LinkedList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedList.h; sourceTree = "<group>"; };
+		BE2F4CB316C10F5E000B2AB0 /* MathAlgorithms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MathAlgorithms.h; sourceTree = "<group>"; };
+		BE2F4CB416C10F5E000B2AB0 /* MSStdInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSStdInt.h; sourceTree = "<group>"; };
+		BE2F4CB516C10F5E000B2AB0 /* NullPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NullPtr.h; sourceTree = "<group>"; };
+		BE2F4CB616C10F5E000B2AB0 /* RangedPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RangedPtr.h; sourceTree = "<group>"; };
+		BE2F4CB716C10F5E000B2AB0 /* RefPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RefPtr.h; sourceTree = "<group>"; };
+		BE2F4CB816C10F5E000B2AB0 /* Scoped.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scoped.h; sourceTree = "<group>"; };
+		BE2F4CB916C10F5E000B2AB0 /* SHA1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHA1.h; sourceTree = "<group>"; };
+		BE2F4CBA16C10F5E000B2AB0 /* StandardInteger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardInteger.h; sourceTree = "<group>"; };
+		BE2F4CBB16C10F5E000B2AB0 /* ThreadLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadLocal.h; sourceTree = "<group>"; };
+		BE2F4CBC16C10F5E000B2AB0 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
+		BE2F4CBD16C10F5E000B2AB0 /* TypeTraits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TypeTraits.h; sourceTree = "<group>"; };
+		BE2F4CBE16C10F5E000B2AB0 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
+		BE2F4CBF16C10F5E000B2AB0 /* WeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakPtr.h; sourceTree = "<group>"; };
+		BE2F4CC416C10F69000B2AB0 /* curl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curl.h; sourceTree = "<group>"; };
+		BE2F4CC516C10F69000B2AB0 /* curlbuild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlbuild.h; sourceTree = "<group>"; };
+		BE2F4CC616C10F69000B2AB0 /* curlrules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlrules.h; sourceTree = "<group>"; };
+		BE2F4CC716C10F69000B2AB0 /* curlver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = curlver.h; sourceTree = "<group>"; };
+		BE2F4CC816C10F69000B2AB0 /* easy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = easy.h; sourceTree = "<group>"; };
+		BE2F4CC916C10F69000B2AB0 /* mprintf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mprintf.h; sourceTree = "<group>"; };
+		BE2F4CCA16C10F69000B2AB0 /* multi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = multi.h; sourceTree = "<group>"; };
+		BE2F4CCB16C10F69000B2AB0 /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
+		BE2F4CCC16C10F69000B2AB0 /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
+		BE2F4CCD16C10F69000B2AB0 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		BE2F4CD116C1FD5D000B2AB0 /* XMLHttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = XMLHttpRequest.cpp; path = ../src/XMLHttpRequest.cpp; sourceTree = "<group>"; };
+		BE2F4CD216C1FD5D000B2AB0 /* XMLHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLHttpRequest.h; path = ../src/XMLHttpRequest.h; sourceTree = "<group>"; };
+		BE2F4CD416C1FD7B000B2AB0 /* Http.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Http.cpp; path = ../src/Http.cpp; sourceTree = "<group>"; };
+		BE2F4CD516C1FD7B000B2AB0 /* Http.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Http.h; path = ../src/Http.h; sourceTree = "<group>"; };
+		BE307D1D167F6752006D7CA7 /* JSCContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JSCContext.cpp; path = ../src/JSCContext.cpp; sourceTree = "<group>"; };
+		BE307D1E167F6752006D7CA7 /* JSCContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSCContext.h; path = ../src/JSCContext.h; sourceTree = "<group>"; };
+		BE719A6416A2977300A8E0E0 /* MovieClip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieClip.h; path = ../src/MovieClip.h; sourceTree = "<group>"; };
+		BE719A6516A2977300A8E0E0 /* MovieClip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MovieClip.cpp; path = ../src/MovieClip.cpp; sourceTree = "<group>"; };
+		BE876109167DB4F000F0AFF3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Giraffe/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		BE87610A167DB4F000F0AFF3 /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = Giraffe/AppDelegate.mm; sourceTree = SOURCE_ROOT; };
+		BE87610D167DB4F100F0AFF3 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = Giraffe/EAGLView.h; sourceTree = SOURCE_ROOT; };
+		BE87610E167DB4F100F0AFF3 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EAGLView.m; path = Giraffe/EAGLView.m; sourceTree = SOURCE_ROOT; };
+		BE876111167DB4F100F0AFF3 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RootViewController.h; path = Giraffe/RootViewController.h; sourceTree = SOURCE_ROOT; };
+		BE876112167DB4F100F0AFF3 /* RootViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = RootViewController.mm; path = Giraffe/RootViewController.mm; sourceTree = SOURCE_ROOT; };
+		BE876118167DB57100F0AFF3 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = global.h; path = Giraffe/global.h; sourceTree = SOURCE_ROOT; };
+		BE87611B167DB5AA00F0AFF3 /* Image.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Image.cpp; path = ../src/Image.cpp; sourceTree = "<group>"; };
+		BE87611C167DB5AA00F0AFF3 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Image.h; path = ../src/Image.h; sourceTree = "<group>"; };
+		BE87611D167DB5AA00F0AFF3 /* MatrixUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MatrixUtil.cpp; path = ../src/MatrixUtil.cpp; sourceTree = "<group>"; };
+		BE87611E167DB5AA00F0AFF3 /* MatrixUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MatrixUtil.h; path = ../src/MatrixUtil.h; sourceTree = "<group>"; };
+		BE876123167DB5AA00F0AFF3 /* RenderContextGL2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = RenderContextGL2.cpp; path = ../src/RenderContextGL2.cpp; sourceTree = "<group>"; };
+		BE876124167DB5AA00F0AFF3 /* RenderContextGL2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RenderContextGL2.h; path = ../src/RenderContextGL2.h; sourceTree = "<group>"; };
+		BE87612A167DB5ED00F0AFF3 /* Image.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = Image.mm; path = Giraffe/Image.mm; sourceTree = SOURCE_ROOT; };
+		BE87612C167DB63800F0AFF3 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Giraffe/Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
+		BE87612D167DB63800F0AFF3 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Giraffe/Default.png; sourceTree = SOURCE_ROOT; };
+		BE87612E167DB63800F0AFF3 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Giraffe/Default@2x.png"; sourceTree = SOURCE_ROOT; };
+		BE87612F167DB63800F0AFF3 /* Giraffe-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Giraffe-Prefix.pch"; path = "Giraffe/Giraffe-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		BE876130167DB63800F0AFF3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Giraffe/main.m; sourceTree = SOURCE_ROOT; };
+		BE876135167DB69300F0AFF3 /* Giraffe-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Giraffe-Info.plist"; path = "Giraffe/Giraffe-Info.plist"; sourceTree = SOURCE_ROOT; };
+		BE87613E167DB88500F0AFF3 /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Point.cpp; path = ../src/Point.cpp; sourceTree = "<group>"; };
+		BE87613F167DB88500F0AFF3 /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Point.h; path = ../src/Point.h; sourceTree = "<group>"; };
+		BE876156167E125300F0AFF3 /* default.vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default.vert.h; sourceTree = "<group>"; };
+		BE876157167E125300F0AFF3 /* fill.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fill.frag.h; sourceTree = "<group>"; };
+		BE876158167E125300F0AFF3 /* texture.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = texture.frag.h; sourceTree = "<group>"; };
+		BE95A51C165D384900E27B06 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		BEA162B8165D236200855D49 /* Giraffe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Giraffe.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEA162BC165D236200855D49 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		BEA162BE165D236200855D49 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BEA162C0165D236200855D49 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BEAD663C1674376400A2737A /* resource */ = {isa = PBXFileReference; lastKnownFileType = folder; name = resource; path = ../resource; sourceTree = "<group>"; };
+		BEAD664D16747EC000A2737A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		BEBFA13116D7534D00AA9736 /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
+		BEBFA13416D7536E00AA9736 /* Audio.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Audio.mm; sourceTree = "<group>"; };
+		BEBFA13616D7580900AA9736 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		BEC8AC5516DC6B79008AF541 /* JSCContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JSCContext.mm; sourceTree = "<group>"; };
+		BECC6D8C1692A10200190D12 /* stringutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stringutil.cpp; path = ../src/stringutil.cpp; sourceTree = "<group>"; };
+		BECC6D8D1692A10200190D12 /* stringutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stringutil.h; path = ../src/stringutil.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BEA162B5165D236200855D49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEBFA13716D7580900AA9736 /* AVFoundation.framework in Frameworks */,
+				BEAD664E16747EC000A2737A /* QuartzCore.framework in Frameworks */,
+				BE95A51D165D384900E27B06 /* OpenGLES.framework in Frameworks */,
+				BEA162BD165D236200855D49 /* UIKit.framework in Frameworks */,
+				BEA162BF165D236200855D49 /* Foundation.framework in Frameworks */,
+				BEA162C1165D236200855D49 /* CoreGraphics.framework in Frameworks */,
+				BE0A124B166B5B01004ADDB5 /* libz.dylib in Frameworks */,
+				BE2F4C7C16C10F4F000B2AB0 /* libcurl.a in Frameworks */,
+				BE2F4C7D16C10F4F000B2AB0 /* libjs.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BE2F4C7E16C10F5E000B2AB0 /* SpiderMonkey */ = {
+			isa = PBXGroup;
+			children = (
+				BE2F4C7F16C10F5E000B2AB0 /* ds */,
+				BE2F4C8116C10F5E000B2AB0 /* gc */,
+				BE2F4C8716C10F5E000B2AB0 /* js */,
+				BE2F4C8E16C10F5E000B2AB0 /* js-config.h */,
+				BE2F4C8F16C10F5E000B2AB0 /* js.msg */,
+				BE2F4C9016C10F5E000B2AB0 /* jsalloc.h */,
+				BE2F4C9116C10F5E000B2AB0 /* jsapi.h */,
+				BE2F4C9216C10F5E000B2AB0 /* jsatom.h */,
+				BE2F4C9316C10F5E000B2AB0 /* jsatom.tbl */,
+				BE2F4C9416C10F5E000B2AB0 /* jsclass.h */,
+				BE2F4C9516C10F5E000B2AB0 /* jsclist.h */,
+				BE2F4C9616C10F5E000B2AB0 /* jscpucfg.h */,
+				BE2F4C9716C10F5E000B2AB0 /* jsdbgapi.h */,
+				BE2F4C9816C10F5E000B2AB0 /* jsdhash.h */,
+				BE2F4C9916C10F5E000B2AB0 /* jsfriendapi.h */,
+				BE2F4C9A16C10F5E000B2AB0 /* jsgc.h */,
+				BE2F4C9B16C10F5E000B2AB0 /* jslock.h */,
+				BE2F4C9C16C10F5E000B2AB0 /* json.h */,
+				BE2F4C9D16C10F5E000B2AB0 /* jsperf.h */,
+				BE2F4C9E16C10F5E000B2AB0 /* jsprf.h */,
+				BE2F4C9F16C10F5E000B2AB0 /* jsproto.tbl */,
+				BE2F4CA016C10F5E000B2AB0 /* jsproxy.h */,
+				BE2F4CA116C10F5E000B2AB0 /* jsprvtd.h */,
+				BE2F4CA216C10F5E000B2AB0 /* jspubtd.h */,
+				BE2F4CA316C10F5E000B2AB0 /* jstypes.h */,
+				BE2F4CA416C10F5E000B2AB0 /* jsutil.h */,
+				BE2F4CA516C10F5E000B2AB0 /* jsval.h */,
+				BE2F4CA616C10F5E000B2AB0 /* jsversion.h */,
+				BE2F4CA716C10F5E000B2AB0 /* jswrapper.h */,
+				BE2F4CA816C10F5E000B2AB0 /* mozilla */,
+			);
+			name = SpiderMonkey;
+			path = ../include/SpiderMonkey;
+			sourceTree = "<group>";
+		};
+		BE2F4C7F16C10F5E000B2AB0 /* ds */ = {
+			isa = PBXGroup;
+			children = (
+				BE2F4C8016C10F5E000B2AB0 /* BitArray.h */,
+			);
+			path = ds;
+			sourceTree = "<group>";
+		};
+		BE2F4C8116C10F5E000B2AB0 /* gc */ = {
+			isa = PBXGroup;
+			children = (
+				BE2F4C8216C10F5E000B2AB0 /* Barrier.h */,
+				BE2F4C8316C10F5E000B2AB0 /* Heap.h */,
+				BE2F4C8416C10F5E000B2AB0 /* Root.h */,
+				BE2F4C8516C10F5E000B2AB0 /* Statistics.h */,
+				BE2F4C8616C10F5E000B2AB0 /* StoreBuffer.h */,
+			);
+			path = gc;
+			sourceTree = "<group>";
+		};
+		BE2F4C8716C10F5E000B2AB0 /* js */ = {
+			isa = PBXGroup;
+			children = (
+				BE2F4C8816C10F5E000B2AB0 /* HashTable.h */,
+				BE2F4C8916C10F5E000B2AB0 /* LegacyIntTypes.h */,
+				BE2F4C8A16C10F5E000B2AB0 /* MemoryMetrics.h */,
+				BE2F4C8B16C10F5E000B2AB0 /* TemplateLib.h */,
+				BE2F4C8C16C10F5E000B2AB0 /* Utility.h */,
+				BE2F4C8D16C10F5E000B2AB0 /* Vector.h */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
+		BE2F4CA816C10F5E000B2AB0 /* mozilla */ = {
+			isa = PBXGroup;
+			children = (
+				BE2F4CA916C10F5E000B2AB0 /* Assertions.h */,
+				BE2F4CAA16C10F5E000B2AB0 /* Attributes.h */,
+				BE2F4CAB16C10F5E000B2AB0 /* BloomFilter.h */,
+				BE2F4CAC16C10F5E000B2AB0 /* CheckedInt.h */,
+				BE2F4CAD16C10F5E000B2AB0 /* Constants.h */,
+				BE2F4CAE16C10F5E000B2AB0 /* FloatingPoint.h */,
+				BE2F4CAF16C10F5E000B2AB0 /* GuardObjects.h */,
+				BE2F4CB016C10F5E000B2AB0 /* HashFunctions.h */,
+				BE2F4CB116C10F5E000B2AB0 /* Likely.h */,
+				BE2F4CB216C10F5E000B2AB0 /* LinkedList.h */,
+				BE2F4CB316C10F5E000B2AB0 /* MathAlgorithms.h */,
+				BE2F4CB416C10F5E000B2AB0 /* MSStdInt.h */,
+				BE2F4CB516C10F5E000B2AB0 /* NullPtr.h */,
+				BE2F4CB616C10F5E000B2AB0 /* RangedPtr.h */,
+				BE2F4CB716C10F5E000B2AB0 /* RefPtr.h */,
+				BE2F4CB816C10F5E000B2AB0 /* Scoped.h */,
+				BE2F4CB916C10F5E000B2AB0 /* SHA1.h */,
+				BE2F4CBA16C10F5E000B2AB0 /* StandardInteger.h */,
+				BE2F4CBB16C10F5E000B2AB0 /* ThreadLocal.h */,
+				BE2F4CBC16C10F5E000B2AB0 /* Types.h */,
+				BE2F4CBD16C10F5E000B2AB0 /* TypeTraits.h */,
+				BE2F4CBE16C10F5E000B2AB0 /* Util.h */,
+				BE2F4CBF16C10F5E000B2AB0 /* WeakPtr.h */,
+			);
+			path = mozilla;
+			sourceTree = "<group>";
+		};
+		BE2F4CC316C10F69000B2AB0 /* curl */ = {
+			isa = PBXGroup;
+			children = (
+				BE2F4CC416C10F69000B2AB0 /* curl.h */,
+				BE2F4CC516C10F69000B2AB0 /* curlbuild.h */,
+				BE2F4CC616C10F69000B2AB0 /* curlrules.h */,
+				BE2F4CC716C10F69000B2AB0 /* curlver.h */,
+				BE2F4CC816C10F69000B2AB0 /* easy.h */,
+				BE2F4CC916C10F69000B2AB0 /* mprintf.h */,
+				BE2F4CCA16C10F69000B2AB0 /* multi.h */,
+				BE2F4CCB16C10F69000B2AB0 /* stdcheaders.h */,
+				BE2F4CCC16C10F69000B2AB0 /* typecheck-gcc.h */,
+				BE2F4CCD16C10F69000B2AB0 /* types.h */,
+			);
+			name = curl;
+			path = ../include/curl;
+			sourceTree = "<group>";
+		};
+		BE87614E167E0C8C00F0AFF3 /* JS */ = {
+			isa = PBXGroup;
+			children = (
+				BE307D1D167F6752006D7CA7 /* JSCContext.cpp */,
+				BE307D1E167F6752006D7CA7 /* JSCContext.h */,
+			);
+			name = JS;
+			sourceTree = "<group>";
+		};
+		BE876155167E125300F0AFF3 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				BE876156167E125300F0AFF3 /* default.vert.h */,
+				BE876157167E125300F0AFF3 /* fill.frag.h */,
+				BE876158167E125300F0AFF3 /* texture.frag.h */,
+			);
+			name = shaders;
+			path = ../src/shaders;
+			sourceTree = "<group>";
+		};
+		BEA162AD165D236200855D49 = {
+			isa = PBXGroup;
+			children = (
+				BEAD663C1674376400A2737A /* resource */,
+				BE2F4C7E16C10F5E000B2AB0 /* SpiderMonkey */,
+				BE2F4CC316C10F69000B2AB0 /* curl */,
+				BE876155167E125300F0AFF3 /* shaders */,
+				BECC6D8A1692A0EA00190D12 /* Util */,
+				BEAD665816748A1100A2737A /* Test */,
+				BE87614E167E0C8C00F0AFF3 /* JS */,
+				BEA162DD165D23D800855D49 /* Display */,
+				BEA162C2165D236200855D49 /* Giraffe */,
+				BEA162BB165D236200855D49 /* Frameworks */,
+				BEA162B9165D236200855D49 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BEA162B9165D236200855D49 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BEA162B8165D236200855D49 /* Giraffe.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BEA162BB165D236200855D49 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BE2F4C7A16C10F4F000B2AB0 /* libcurl.a */,
+				BE2F4C7B16C10F4F000B2AB0 /* libjs.a */,
+				BE0A124A166B5B01004ADDB5 /* libz.dylib */,
+				BEBFA13616D7580900AA9736 /* AVFoundation.framework */,
+				BEAD664D16747EC000A2737A /* QuartzCore.framework */,
+				BE95A51C165D384900E27B06 /* OpenGLES.framework */,
+				BEA162BC165D236200855D49 /* UIKit.framework */,
+				BEA162BE165D236200855D49 /* Foundation.framework */,
+				BEA162C0165D236200855D49 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BEA162C2165D236200855D49 /* Giraffe */ = {
+			isa = PBXGroup;
+			children = (
+				BE876118167DB57100F0AFF3 /* global.h */,
+				BEC8AC5516DC6B79008AF541 /* JSCContext.mm */,
+				BEBFA13116D7534D00AA9736 /* Audio.h */,
+				BEBFA13416D7536E00AA9736 /* Audio.mm */,
+				BE87612A167DB5ED00F0AFF3 /* Image.mm */,
+				BE87610D167DB4F100F0AFF3 /* EAGLView.h */,
+				BE87610E167DB4F100F0AFF3 /* EAGLView.m */,
+				BE876111167DB4F100F0AFF3 /* RootViewController.h */,
+				BE876112167DB4F100F0AFF3 /* RootViewController.mm */,
+				BE876109167DB4F000F0AFF3 /* AppDelegate.h */,
+				BE87610A167DB4F000F0AFF3 /* AppDelegate.mm */,
+				BEA162C3165D236200855D49 /* Supporting Files */,
+			);
+			path = Giraffe;
+			sourceTree = "<group>";
+		};
+		BEA162C3165D236200855D49 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BE876135167DB69300F0AFF3 /* Giraffe-Info.plist */,
+				BE87612C167DB63800F0AFF3 /* Default-568h@2x.png */,
+				BE87612D167DB63800F0AFF3 /* Default.png */,
+				BE87612E167DB63800F0AFF3 /* Default@2x.png */,
+				BE87612F167DB63800F0AFF3 /* Giraffe-Prefix.pch */,
+				BE876130167DB63800F0AFF3 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BEA162DD165D23D800855D49 /* Display */ = {
+			isa = PBXGroup;
+			children = (
+				BE719A6516A2977300A8E0E0 /* MovieClip.cpp */,
+				BE719A6416A2977300A8E0E0 /* MovieClip.h */,
+				BE87611B167DB5AA00F0AFF3 /* Image.cpp */,
+				BE87611C167DB5AA00F0AFF3 /* Image.h */,
+				BE87611D167DB5AA00F0AFF3 /* MatrixUtil.cpp */,
+				BE87611E167DB5AA00F0AFF3 /* MatrixUtil.h */,
+				BE876123167DB5AA00F0AFF3 /* RenderContextGL2.cpp */,
+				BE876124167DB5AA00F0AFF3 /* RenderContextGL2.h */,
+			);
+			name = Display;
+			sourceTree = "<group>";
+		};
+		BEAD665816748A1100A2737A /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				BE87613E167DB88500F0AFF3 /* Point.cpp */,
+				BE87613F167DB88500F0AFF3 /* Point.h */,
+			);
+			name = Test;
+			sourceTree = "<group>";
+		};
+		BECC6D8A1692A0EA00190D12 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				BE2F4CD416C1FD7B000B2AB0 /* Http.cpp */,
+				BE2F4CD516C1FD7B000B2AB0 /* Http.h */,
+				BECC6D8C1692A10200190D12 /* stringutil.cpp */,
+				BECC6D8D1692A10200190D12 /* stringutil.h */,
+				BE2F4CD116C1FD5D000B2AB0 /* XMLHttpRequest.cpp */,
+				BE2F4CD216C1FD5D000B2AB0 /* XMLHttpRequest.h */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BEA162B7165D236200855D49 /* Giraffe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BEA162D6165D236200855D49 /* Build configuration list for PBXNativeTarget "Giraffe" */;
+			buildPhases = (
+				BEA162B4165D236200855D49 /* Sources */,
+				BEA162B5165D236200855D49 /* Frameworks */,
+				BEA162B6165D236200855D49 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Giraffe;
+			productName = Giraffe;
+			productReference = BEA162B8165D236200855D49 /* Giraffe.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BEA162AF165D236200855D49 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = kins;
+			};
+			buildConfigurationList = BEA162B2165D236200855D49 /* Build configuration list for PBXProject "Giraffe" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = BEA162AD165D236200855D49;
+			productRefGroup = BEA162B9165D236200855D49 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BEA162B7165D236200855D49 /* Giraffe */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BEA162B6165D236200855D49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BEAD663D1674376400A2737A /* resource in Resources */,
+				BE876131167DB63800F0AFF3 /* Default-568h@2x.png in Resources */,
+				BE876132167DB63800F0AFF3 /* Default.png in Resources */,
+				BE876133167DB63800F0AFF3 /* Default@2x.png in Resources */,
+				BE2F4CC016C10F5E000B2AB0 /* js.msg in Resources */,
+				BE2F4CC116C10F5E000B2AB0 /* jsatom.tbl in Resources */,
+				BE2F4CC216C10F5E000B2AB0 /* jsproto.tbl in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BEA162B4165D236200855D49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BE876113167DB4F100F0AFF3 /* AppDelegate.mm in Sources */,
+				BE876115167DB4F100F0AFF3 /* EAGLView.m in Sources */,
+				BE876117167DB4F100F0AFF3 /* RootViewController.mm in Sources */,
+				BE876125167DB5AA00F0AFF3 /* Image.cpp in Sources */,
+				BE876126167DB5AA00F0AFF3 /* MatrixUtil.cpp in Sources */,
+				BE876129167DB5AA00F0AFF3 /* RenderContextGL2.cpp in Sources */,
+				BE87612B167DB5ED00F0AFF3 /* Image.mm in Sources */,
+				BE876134167DB63800F0AFF3 /* main.m in Sources */,
+				BE876140167DB88500F0AFF3 /* Point.cpp in Sources */,
+				BE307D1F167F6752006D7CA7 /* JSCContext.cpp in Sources */,
+				BECC6D8E1692A10200190D12 /* stringutil.cpp in Sources */,
+				BE719A6616A2977300A8E0E0 /* MovieClip.cpp in Sources */,
+				BE2F4CD316C1FD5D000B2AB0 /* XMLHttpRequest.cpp in Sources */,
+				BE2F4CD616C1FD7B000B2AB0 /* Http.cpp in Sources */,
+				BEBFA13516D7536E00AA9736 /* Audio.mm in Sources */,
+				BEC8AC5616DC6B7A008AF541 /* JSCContext.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		BEA162D4165D236200855D49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: ren bing (45V6JCTZF3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ren bing (45V6JCTZF3)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../lib/SpiderMonkey\"";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "AB99E8B5-0851-49C8-ADDD-AB86C91BDBBB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB99E8B5-0851-49C8-ADDD-AB86C91BDBBB";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BEA162D5165D236200855D49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer: ren bing (45V6JCTZF3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: ren bing (45V6JCTZF3)";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../lib/SpiderMonkey\"";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "AB99E8B5-0851-49C8-ADDD-AB86C91BDBBB";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "AB99E8B5-0851-49C8-ADDD-AB86C91BDBBB";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BEA162D7165D236200855D49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Giraffe/Giraffe-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../include/SpiderMonkey\"",
+					"\"$(SRCROOT)/../include/curl\"",
+				);
+				INFOPLIST_FILE = "Giraffe/Giraffe-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib\"",
+					"\"$(SRCROOT)/lib\"",
+				);
+				PRODUCT_NAME = Giraffe;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		BEA162D8165D236200855D49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Giraffe/Giraffe-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/../include/SpiderMonkey\"",
+					"\"$(SRCROOT)/../include/curl\"",
+				);
+				INFOPLIST_FILE = "Giraffe/Giraffe-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../lib\"",
+					"\"$(SRCROOT)/lib\"",
+				);
+				PRODUCT_NAME = Giraffe;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BEA162B2165D236200855D49 /* Build configuration list for PBXProject "Giraffe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEA162D4165D236200855D49 /* Debug */,
+				BEA162D5165D236200855D49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BEA162D6165D236200855D49 /* Build configuration list for PBXNativeTarget "Giraffe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BEA162D7165D236200855D49 /* Debug */,
+				BEA162D8165D236200855D49 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BEA162AF165D236200855D49 /* Project object */;
+}

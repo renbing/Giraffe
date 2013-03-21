@@ -1,0 +1,14 @@
+*.o
+*.swp
+*.pyc
+.DS_Store
+
+android/bin
+android/libs
+android/obj
+android/gen
+android/local.properties
+android/jni/config.cpp
+ios/build
+ios/Giraffe.xcodeproj/xcuserdata
+ios/Giraffe.xcodeproj/project.xcworkspace/xcuserdata
