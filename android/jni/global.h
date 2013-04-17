@@ -24,6 +24,8 @@
 
 #include <android/log.h>
 
+#define DEBUG
+
 #ifdef DEBUG
 #define TRACE(...) __android_log_print(ANDROID_LOG_INFO, "ProjectName", __VA_ARGS__);
 #else

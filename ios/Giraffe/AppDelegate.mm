@@ -9,10 +9,7 @@
 #import "AppDelegate.h"
 #import "JSCContext.h"
 #import "RootViewController.h"
-#import "Audio.h"
-
-
-Audio *audio = NULL;
+#import <AudioToolbox/AudioToolbox.h>
 
 @implementation AppDelegate
 
@@ -35,12 +32,9 @@ Audio *audio = NULL;
     [self.window makeKeyAndVisible];
     [viewController startAnimation];
     
-    JSCContext::getInstance()->run("resource/warcraft/");
-    //JSCContext::getInstance()->run("http://192.168.1.103/giraffe/warcraft/");
-    
-    audio = new Audio();
-    //audio->set_src("winwinwin.mp3");
-    audio->set_src("home_music.mp3");
+    JSCContext::getInstance()->run("/battle/");
+    //JSCContext::getInstance()->run("/resource/warcraft/");
+    //JSCContext::getInstance()->run("http://192.168.1.127/renbing/battle/");
     
     return YES;
 }

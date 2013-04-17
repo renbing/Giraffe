@@ -21,7 +21,7 @@ SoundManager.prototype = {
         if(!newBackground) {
             this.background && this.background.play();
         }else{
-            this.background && this.background.stop();
+            this.background && this.background.pause();
             this.background = this.createAudio(newBackground);
             this.background.autoplay = true;
             this.background.muted = this.backgroundMuted;
@@ -29,13 +29,13 @@ SoundManager.prototype = {
     },
 
     stopBackground: function(bClean) {
-        this.background && this.background.stop();
+        this.background && this.background.pause();
         if(bClean) this.background = null;
     },
 
     setBackgroundMusicMuted: function(muted) {
         this.backgroundMuted = !!muted;
-        this.background && this.background.muted = this.backgroundMuted;
+        this.background && (this.background.muted = this.backgroundMuted);
     },
 
     playEffect: function(name) {
@@ -44,27 +44,30 @@ SoundManager.prototype = {
             audio.autoplay = true;
             audio.muted = this.effectMuted;
             this.effects[name] = audio;
+        }else{
+            this.effects[name].play();
         }
-        this.effects[name].play();
     },
 
     stopEffect: function(name) {
         if( name in this.effects ) {
-            this.effects[name].stop();
+            this.effects[name].pause();
         }
     },
 
     stopEffects: function(bClean) {
         for(var name in this.effects) {
-            this.effects[name].stop();
+            this.effects[name].pause();
         }
         if( bClean ) this.effects = {};
     },
 
-    setIsEffectMuted: function(muted){
+    setEffectMuted: function(muted){
         this.effectMuted = !!muted;
         for(var name in this.effects) {
             this.effects[name].muted = this.effectMuted;
         }
     },
 };
+
+var soundManager = new SoundManager();

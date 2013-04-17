@@ -44,4 +44,5 @@ void split(const string& line, const string& segmentor, vector<string>& segs);
 
 bool convertHTMLColor(const string &style, unsigned int &color);
 
+    
 };

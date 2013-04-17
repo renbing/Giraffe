@@ -13,6 +13,8 @@ LOCAL_CPPFLAGS  += -frtti
 LOCAL_SRC_FILES := $(wildcard ../../src/*.cpp)
 LOCAL_SRC_FILES += \
     Image.cpp \
+    Text.cpp \
+    Audio.cpp \
     JSCContext.cpp \
 	main.cpp
 

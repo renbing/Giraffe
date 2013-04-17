@@ -24,6 +24,7 @@
 #endif
 
 #define LOG(...)
+//#define LOG(...) printf(__VA_ARGS__); printf("\n");
 #define ERROR(...) printf(__VA_ARGS__); printf("\n");
 
 #define EventCallbackFunc

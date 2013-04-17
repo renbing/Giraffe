@@ -17,7 +17,7 @@
 #include "global.h"
 #include "JSCContext.h"
 #include "MatrixUtil.h"
-#include "Image.h"
+#include "Texture.h"
 
 using std::vector;
 using std::string;
@@ -29,7 +29,9 @@ typedef enum {
     EventTypeSwipe      = 3,
     EventTypeDragStart  = 4,
     EventTypeDrag       = 5,
-    EventTypeDragEnd    = 6
+    EventTypeDragEnd    = 6,
+    EventTypePinch      = 11,
+    EventTypeLongPress  = 12
 } EventType;
 
 typedef enum {
@@ -97,21 +99,34 @@ public:
 
     // 增加事件监听
     void addEventListener(int type, JSObject *callback) {
+        JSCContext::getInstance()->addToSlot(jsthis, getEventName(type).c_str(), callback);
         eventBubbleCallBack[type] = callback;
     }
 
     // 卸载事件监听
     void removeEventListener(int type) {
+        JSCContext::getInstance()->removeFromSlot(jsthis, getEventName(type).c_str());
         eventBubbleCallBack.erase(type);
     }
     
     // 卸载所有事件
     void removeAllEventListener() {
+        map<int, JSObject *>::iterator it = eventBubbleCallBack.begin();
+        for( ; it != eventBubbleCallBack.end(); it++ ){
+            JSCContext::getInstance()->removeFromSlot(jsthis, getEventName(it->first).c_str());
+        }
         eventBubbleCallBack.clear();
     }
     
     // 冒泡事件(从子节点到父节点,递归到舞台)
     void bubbleEvent(Event *e);
+    
+private:
+    string getEventName(int eventType) {
+        char buf[64];
+        sprintf(buf, "event_%d", eventType);
+        return string(buf);
+    }
 };
 
 class Bitmap : public DisplayObject
@@ -122,16 +137,18 @@ public:
     
 private:
     GLuint  m_vbo[1];
-    Image   *m_image;
+    Texture   *m_texture;
     
 public:
     JS_CLASS_EXPORT_DEF
     
-    Bitmap(Image *image, const string &name, float sx, float sy, float sw, float sh, float width, float height);
-    Bitmap(Image *image, const string &name="");
+    Bitmap(Texture *texture, const string &name, float sx, float sy, float sw, float sh, float width, float height);
+    Bitmap(Texture *texture, const string &name="");
     ~Bitmap();
     
-    Image *getImage() { return m_image; }
+    Texture *getTexture() { return m_texture; }
+    Texture *get_texture() { return m_texture; }
+    
     GLuint getVBO() { return m_vbo[0]; }
     
     virtual void render();
@@ -211,6 +228,7 @@ private:
     static EventManager *m_instance;
     DisplayObject       *m_hited;
     esPoint             m_hitedPoint;
+    float               m_pinchScale;
 
 public:
     static EventManager *getInstance();
@@ -220,6 +238,8 @@ public:
     void onDrag(float dx, float dy);
     void onDragEnd();
     void onSwipe(SwipeDirection direction);
+    void onPinch(float scale);
+    void onLongPress();
     
 private:
     EventManager() {

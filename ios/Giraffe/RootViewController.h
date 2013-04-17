@@ -19,9 +19,12 @@
 	size_t m_frameCount;
 	UILabel *m_fpsLabel;
 	UITextView *m_console;
+    float m_pinchScale;
     
     EAGLView *m_glView;
     RenderContextGL2 *m_glRenderContext;
+    
+    CGPoint m_dragLastMoved;
 }
 
 @property (atomic, readonly) UIInterfaceOrientation orientation;

@@ -2,7 +2,9 @@
 *.swp
 *.pyc
 .DS_Store
+*.bak
 
+android/assets/battle
 android/bin
 android/libs
 android/obj

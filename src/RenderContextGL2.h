@@ -13,7 +13,7 @@
 
 #include "global.h"
 #include "MatrixUtil.h"
-#include "Image.h"
+#include "Texture.h"
 
 enum PROGRAM_STATE {
     TEXTURE_PROGRAM = 0,
@@ -81,7 +81,7 @@ public:
 public:
     esMatrix * tsrMatrix() { return &m_tsrMatrix; }
     
-    void layout(float width, float height);
+    void layout(float width, float height, bool flipY=false);
     void save();
     void restore();
     
@@ -93,7 +93,7 @@ public:
     void changeAlpha(float alpha);
     
     void fillRect(const Color4f &color,float x, float y, float w, float h);
-    void drawRect(const Image *image, GLuint vbo);
+    void drawRect(const Texture *texture, GLuint vbo);
 };
 
 inline RenderContextGL2 * RenderContextGL2::getInstance()
@@ -107,6 +107,7 @@ inline RenderContextGL2 * RenderContextGL2::getInstance()
 
 inline void RenderContextGL2::save()
 {
+    LOG("RenderContextGL2 save %f:%f", m_tsrMatrix.tx, m_tsrMatrix.ty);
     if( m_matrixStackIndex+1 >= MATRIX_STACK_DEPTH ) {
         ERROR("RenderContextGL2 TOO MUCH save called, please minimize save call!!!")
         return;
@@ -118,12 +119,13 @@ inline void RenderContextGL2::save()
 
 inline void RenderContextGL2::restore()
 {
+    LOG("RenderContextGL2 restore %f:%f", m_tsrMatrix.tx, m_tsrMatrix.ty);
     if( m_matrixStackIndex <= 0 ) {
         ERROR("RenderContextGL2 TOO MUCH restore called, please minimize restore call!!!")
     }
     
-    m_matrixStackIndex = m_matrixStackIndex > 0 ? m_matrixStackIndex-1 : 0;
     esMatrixCopy(&m_tsrMatrix, &m_matrixStack[m_matrixStackIndex]);
+    m_matrixStackIndex--;
     applyTSRMatrix();
 }
 

@@ -35,6 +35,15 @@ static jsval MY_DisplayObjectArray_TO_JSVAL(JSContext *cx, vector<DisplayObject 
     return OBJECT_TO_JSVAL(array);
 }
 
+#define MY_JSVAL_TO_Texture(cx, v)   static_cast<Texture *>(JS_GetPrivate(JSVAL_TO_OBJECT(v)))
+static jsval MY_Texture_TO_JSVAL(JSContext *cx, Texture *cobj) {
+    if( cobj ) {
+        return OBJECT_TO_JSVAL(cobj->jsthis);
+    }
+    
+    return JS::NullValue();
+}
+
 JS_PROPERTY(DisplayObject, STRING, name)
 JS_PROPERTY(DisplayObject, BOOL, visible)
 JS_PROPERTY(DisplayObject, NUMBER, alpha)
@@ -58,6 +67,8 @@ JS_SIMPLE_FUNC(DisplayObject, removeAllEventListener, VOID)
 JS_PROPERTY(Bitmap, NUMBER, anchorX)
 JS_PROPERTY(Bitmap, NUMBER, anchorY)
 
+JS_PROPERTY_READONLY_FUNC(Bitmap, Texture, texture)
+
 JSPropertySpec Bitmap::js_ps[] = {
     JS_PROPERTY_DEF(DisplayObject, name),
     JS_PROPERTY_DEF(DisplayObject, visible),
@@ -72,6 +83,7 @@ JSPropertySpec Bitmap::js_ps[] = {
     JS_PROPERTY_DEF(DisplayObject, rotation),
     JS_PROPERTY_DEF(Bitmap, anchorX),
     JS_PROPERTY_DEF(Bitmap, anchorY),
+    JS_PROPERTY_READONLY_DEF(Bitmap, texture),
     JS_PS_END
 };
 
@@ -97,18 +109,23 @@ Bitmap * js_native_constructor<Bitmap>(JSContext *cx, unsigned argc, jsval *vp) 
     
     jsval *argv = JS_ARGV(cx, vp);
     Bitmap *cobj = NULL;
-    Image *image = NULL;
+    Texture *texture = NULL;
     if( argc == 1 ) {
-        image = static_cast<Image *>(JS_GetPrivate(JSVAL_TO_OBJECT(argv[0])));
-        cobj = new Bitmap(image);
+        texture = static_cast<Texture *>(JS_GetPrivate(JSVAL_TO_OBJECT(argv[0])));
+        cobj = new Bitmap(texture);
     }else if( argc == 2 ) {
-        image = static_cast<Image *>(JS_GetPrivate(JSVAL_TO_OBJECT(argv[0])));
-        cobj = new Bitmap(image, MY_JSVAL_TO_STRING(cx, argv[1]));
+        texture = static_cast<Texture *>(JS_GetPrivate(JSVAL_TO_OBJECT(argv[0])));
+        cobj = new Bitmap(texture, MY_JSVAL_TO_STRING(cx, argv[1]));
+    }else if( argc == 6 ) {
+        texture = static_cast<Texture *>(JS_GetPrivate(JSVAL_TO_OBJECT(argv[0])));
+        cobj = new Bitmap(texture, MY_JSVAL_TO_STRING(cx, argv[1]), MY_JSVAL_TO_NUMBER(cx, argv[2]),
+                    MY_JSVAL_TO_NUMBER(cx, argv[3]), MY_JSVAL_TO_NUMBER(cx, argv[4]), MY_JSVAL_TO_NUMBER(cx, argv[5]),
+                    MY_JSVAL_TO_NUMBER(cx, argv[4]), MY_JSVAL_TO_NUMBER(cx, argv[5]));
     }else if( argc == 8 ) {
-        image = static_cast<Image *>(JS_GetPrivate(JSVAL_TO_OBJECT(argv[0])));
-        cobj = new Bitmap(image, MY_JSVAL_TO_STRING(cx, argv[1]), JSVAL_TO_DOUBLE(argv[2]),
-                    JSVAL_TO_DOUBLE(argv[3]), JSVAL_TO_DOUBLE(argv[4]), JSVAL_TO_DOUBLE(argv[5]),
-                    JSVAL_TO_DOUBLE(argv[6]), JSVAL_TO_DOUBLE(argv[7]));
+        texture = static_cast<Texture *>(JS_GetPrivate(JSVAL_TO_OBJECT(argv[0])));
+        cobj = new Bitmap(texture, MY_JSVAL_TO_STRING(cx, argv[1]), MY_JSVAL_TO_NUMBER(cx, argv[2]),
+                    MY_JSVAL_TO_NUMBER(cx, argv[3]), MY_JSVAL_TO_NUMBER(cx, argv[4]), MY_JSVAL_TO_NUMBER(cx, argv[5]),
+                    MY_JSVAL_TO_NUMBER(cx, argv[6]), MY_JSVAL_TO_NUMBER(cx, argv[7]));
     }else {
         return NULL;
     }
@@ -119,8 +136,8 @@ Bitmap * js_native_constructor<Bitmap>(JSContext *cx, unsigned argc, jsval *vp) 
 template<>
 void js_native_constructor_end<Bitmap>(JSContext *cx, Bitmap *obj) {
     JSObject *slot = JSVAL_TO_OBJECT(JS_GetReservedSlot(obj->jsthis, 0));
-    jsval v = OBJECT_TO_JSVAL(obj->getImage()->jsthis);
-    JS_SetProperty(cx, slot, "image", &v);
+    jsval v = OBJECT_TO_JSVAL(obj->getTexture()->jsthis);
+    JS_SetProperty(cx, slot, "texture", &v);
 }
 
 JS_CLASS_EXPORT(Bitmap)
@@ -225,6 +242,22 @@ JSFunctionSpec MovieClip::js_sfs[] = {
     JS_FS_END
 };
 
+template<>
+MovieClip * js_native_constructor<MovieClip>(JSContext *cx, unsigned argc, jsval *vp) {
+    
+    jsval *argv = JS_ARGV(cx, vp);
+    MovieClip *cobj = NULL;
+    if( argc == 1 ) {
+        cobj = new MovieClip(MY_JSVAL_TO_STRING(cx, argv[0]));
+    }else if( argc == 2 ) {
+        cobj = new MovieClip(MY_JSVAL_TO_STRING(cx, argv[0]), MY_JSVAL_TO_INT(cx, argv[1]));
+    }else{
+        cobj = new MovieClip();
+    }
+    
+    return cobj;
+}
+
 JS_CLASS_EXPORT(MovieClip)
 
 
@@ -295,9 +328,9 @@ DisplayObject * DisplayObject::hitTest(float x, float y)
     return NULL;
 }
 
-Bitmap::Bitmap(Image *image, const string &name, float sx, float sy, float sw, float sh, float width, float height)
+Bitmap::Bitmap(Texture *texture, const string &name, float sx, float sy, float sw, float sh, float width, float height)
 {
-    m_image = image;
+    m_texture = texture;
     this->width = width;
     this->height = height;
     this->name = name;
@@ -310,15 +343,15 @@ Bitmap::Bitmap(Image *image, const string &name, float sx, float sy, float sw, f
         // vertices
         0, 0, 0, height, width, height, width, 0,
         // texture
-        sx/image->POTWidth, sy/image->POTHeight, sx/image->POTWidth, (sy+sh)/image->POTHeight,
-        (sx+sw)/image->POTWidth, (sy+sh)/image->POTHeight, (sx+sw)/image->POTWidth, sy/image->POTHeight
+        sx/texture->POTWidth, sy/texture->POTHeight, sx/texture->POTWidth, (sy+sh)/texture->POTHeight,
+        (sx+sw)/texture->POTWidth, (sy+sh)/texture->POTHeight, (sx+sw)/texture->POTWidth, sy/texture->POTHeight
     };
     glBufferData(GL_ARRAY_BUFFER, 16 * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
 }
 
-Bitmap::Bitmap(Image *image, const string &name)
+Bitmap::Bitmap(Texture *texture, const string &name)
 {
-    new (this)Bitmap(image, name, 0, 0, image->width, image->height, image->width, image->height);
+    new (this)Bitmap(texture, name, 0, 0, texture->width, texture->height, texture->width, texture->height);
 }
 
 Bitmap::~Bitmap()
@@ -362,7 +395,7 @@ void Bitmap::render()
     }
     
     esMatrixCopy(&matrix, glRender->tsrMatrix());
-    glRender->drawRect(m_image, m_vbo[0]);
+    glRender->drawRect(m_texture, m_vbo[0]);
     
     if( clipRect ) {
         glRender->unscissor();
@@ -469,13 +502,15 @@ void DisplayObject::bubbleEvent(Event *e)
 {
     map<int, JSObject *>::iterator it = eventBubbleCallBack.find(e->type);
     if( it != eventBubbleCallBack.end() ) {
-        jsval event = JSCContext::getInstance()->createEvent(e);
-        JSCContext::getInstance()->callJSFunction(it->second, 1, &event);
+        jsval events[1] = {JSCContext::getInstance()->createEvent(e)};
+        JSCContext::getInstance()->callJSFunction(it->second, 1, events, this->jsthis);
+        
+        // 停止冒泡
+        return;
         
         // Drag/Swip事件停止冒泡
         if( e->type == EventTypeDrag || e->type == EventTypeDragEnd ||
            e->type == EventTypeDragStart || e->type == EventTypeSwipe ) {
-            return;
         }
     }
     
@@ -528,7 +563,9 @@ void MovieClip::render()
     }
     glRender->restore();
     
-    nextFrame();
+    if( !isStoped ) {
+        nextFrame();
+    }
 }
 
 
@@ -538,7 +575,7 @@ DisplayObject * MovieClip::hitTest(float x, float y)
         return NULL;
     }
     
-    for( int i=0; i<children->size(); i++ ) {
+    for( int i=children->size()-1; i>=0; i-- ) {
         DisplayObject *hited = children->at(i)->hitTest(x, y);
         if( hited ) {
             return hited;
@@ -559,7 +596,7 @@ MovieClip::MovieClip(const string & name, const unsigned int frameCounts)
     }
     
     currentFrame = 1;
-    isStoped = false;
+    isStoped = true;
         
     for( int i=0; i<=totalFrames; i++ ) {
         frames.push_back(vector<DisplayObject*>());
@@ -625,6 +662,20 @@ void EventManager::onSwipe(SwipeDirection direction)
     
     Event e(EventTypeSwipe, m_hitedPoint);
     e.direction = direction;
+    
+    m_hited->bubbleEvent(&e);
+}
+
+void EventManager::onPinch(float scale)
+{
+    JSCContext::getInstance()->onPinch(scale);
+}
+
+void EventManager::onLongPress()
+{
+    if( !m_hited ) return;
+    
+    Event e(EventTypeLongPress, m_hitedPoint);
     
     m_hited->bubbleEvent(&e);
 }

@@ -32,6 +32,7 @@ private:
     JSRuntime *m_rt;
     JSObject *m_globalObj;
     jsval m_mainLoop;
+    jsval m_onPinch;
     string m_path;
     static JSCContext *m_instance;
     
@@ -46,7 +47,12 @@ public:
     void callJSFunction(JSObject *callback, unsigned int argc = 0, jsval *argv = NULL, JSObject *caller=NULL) {
         callJSFunction(OBJECT_TO_JSVAL(callback), argc, argv, caller);
     }
+    
+    void addToSlot(JSObject *obj, const char *name, JSObject *value);
+    void removeFromSlot(JSObject *obj, const char *name);
+    
     void runMainLoop();
+    void onPinch(float scale);
 
     const string &path() { return m_path; }
     JSContext *jsContext() { return m_cx; }
@@ -87,12 +93,19 @@ inline string JSVAL_TO_STDSTRING(JSContext *cx, jsval v)
 inline jsval STDSTRING_TO_JSVAL(JSContext *cx, const string &v)
 {
     JSString *str = JS_NewStringCopyZ(cx, v.c_str());
+    if( str == NULL ){
+        //str = JS_NewUCStringCopyZ(cx, (jschar *)v.c_str());
+        int i=0;
+    }
     return STRING_TO_JSVAL(str);
 }
 
 inline jsval STDSTRING_TO_JSVAL(JSContext *cx, const char *v)
 {
     JSString *str = JS_NewStringCopyZ(cx, v);
+    if( str == NULL ){
+        //str = JS_NewUCStringCopyZ(cx, (jschar *)v);
+    }
     return STRING_TO_JSVAL(str);
 }
 

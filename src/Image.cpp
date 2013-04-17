@@ -36,16 +36,8 @@ JSFunctionSpec Image::js_sfs[] = {
 
 JS_CLASS_EXPORT(Image)
 
-Image::Image() : m_texture(0),hasAlpha(0),premultiAlpha(0),width(0),height(0),POTWidth(0),POTHeight(0),onload(NULL)
+Image::Image() : onload(NULL)
 {
-}
-
-Image::~Image()
-{
-    if( m_texture > 0 ) {
-        glDeleteTextures(1, &m_texture);
-        m_texture = 0;
-    }
 }
 
 void Image::setupTexture(const void *data)

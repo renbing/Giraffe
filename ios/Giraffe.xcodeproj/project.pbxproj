@@ -16,6 +16,7 @@
 		BE2F4CD316C1FD5D000B2AB0 /* XMLHttpRequest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2F4CD116C1FD5D000B2AB0 /* XMLHttpRequest.cpp */; };
 		BE2F4CD616C1FD7B000B2AB0 /* Http.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE2F4CD416C1FD7B000B2AB0 /* Http.cpp */; };
 		BE307D1F167F6752006D7CA7 /* JSCContext.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE307D1D167F6752006D7CA7 /* JSCContext.cpp */; };
+		BE6456DC171E8DCD0070DE44 /* battle in Resources */ = {isa = PBXBuildFile; fileRef = BE6456DB171E8DCD0070DE44 /* battle */; };
 		BE719A6616A2977300A8E0E0 /* MovieClip.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BE719A6516A2977300A8E0E0 /* MovieClip.cpp */; };
 		BE876113167DB4F100F0AFF3 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = BE87610A167DB4F000F0AFF3 /* AppDelegate.mm */; };
 		BE876115167DB4F100F0AFF3 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE87610E167DB4F100F0AFF3 /* EAGLView.m */; };
@@ -33,6 +34,9 @@
 		BEA162BD165D236200855D49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA162BC165D236200855D49 /* UIKit.framework */; };
 		BEA162BF165D236200855D49 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA162BE165D236200855D49 /* Foundation.framework */; };
 		BEA162C1165D236200855D49 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEA162C0165D236200855D49 /* CoreGraphics.framework */; };
+		BEA65C271702C8290097E355 /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA65C251702C8290097E355 /* Texture.cpp */; };
+		BEA65C2A1702CB2D0097E355 /* Text.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEA65C281702CB2D0097E355 /* Text.mm */; };
+		BEA65C2D17032D6B0097E355 /* Text.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BEA65C2B17032D6A0097E355 /* Text.cpp */; };
 		BEAD663D1674376400A2737A /* resource in Resources */ = {isa = PBXBuildFile; fileRef = BEAD663C1674376400A2737A /* resource */; };
 		BEAD664E16747EC000A2737A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BEAD664D16747EC000A2737A /* QuartzCore.framework */; };
 		BEBFA13516D7536E00AA9736 /* Audio.mm in Sources */ = {isa = PBXBuildFile; fileRef = BEBFA13416D7536E00AA9736 /* Audio.mm */; };
@@ -116,12 +120,14 @@
 		BE2F4CCB16C10F69000B2AB0 /* stdcheaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stdcheaders.h; sourceTree = "<group>"; };
 		BE2F4CCC16C10F69000B2AB0 /* typecheck-gcc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "typecheck-gcc.h"; sourceTree = "<group>"; };
 		BE2F4CCD16C10F69000B2AB0 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
-		BE2F4CD116C1FD5D000B2AB0 /* XMLHttpRequest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = XMLHttpRequest.cpp; path = ../src/XMLHttpRequest.cpp; sourceTree = "<group>"; };
+		BE2F4CD116C1FD5D000B2AB0 /* XMLHttpRequest.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = XMLHttpRequest.cpp; path = ../src/XMLHttpRequest.cpp; sourceTree = "<group>"; };
 		BE2F4CD216C1FD5D000B2AB0 /* XMLHttpRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLHttpRequest.h; path = ../src/XMLHttpRequest.h; sourceTree = "<group>"; };
-		BE2F4CD416C1FD7B000B2AB0 /* Http.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Http.cpp; path = ../src/Http.cpp; sourceTree = "<group>"; };
+		BE2F4CD416C1FD7B000B2AB0 /* Http.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Http.cpp; path = ../src/Http.cpp; sourceTree = "<group>"; };
 		BE2F4CD516C1FD7B000B2AB0 /* Http.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Http.h; path = ../src/Http.h; sourceTree = "<group>"; };
-		BE307D1D167F6752006D7CA7 /* JSCContext.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JSCContext.cpp; path = ../src/JSCContext.cpp; sourceTree = "<group>"; };
+		BE307D1D167F6752006D7CA7 /* JSCContext.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = JSCContext.cpp; path = ../src/JSCContext.cpp; sourceTree = "<group>"; };
 		BE307D1E167F6752006D7CA7 /* JSCContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSCContext.h; path = ../src/JSCContext.h; sourceTree = "<group>"; };
+		BE5EB3171715332600649503 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Device.h; path = ../src/Device.h; sourceTree = "<group>"; };
+		BE6456DB171E8DCD0070DE44 /* battle */ = {isa = PBXFileReference; lastKnownFileType = folder; name = battle; path = ../android/assets/battle; sourceTree = "<group>"; };
 		BE719A6416A2977300A8E0E0 /* MovieClip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MovieClip.h; path = ../src/MovieClip.h; sourceTree = "<group>"; };
 		BE719A6516A2977300A8E0E0 /* MovieClip.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MovieClip.cpp; path = ../src/MovieClip.cpp; sourceTree = "<group>"; };
 		BE876109167DB4F000F0AFF3 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Giraffe/AppDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -144,7 +150,7 @@
 		BE87612F167DB63800F0AFF3 /* Giraffe-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Giraffe-Prefix.pch"; path = "Giraffe/Giraffe-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		BE876130167DB63800F0AFF3 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Giraffe/main.m; sourceTree = SOURCE_ROOT; };
 		BE876135167DB69300F0AFF3 /* Giraffe-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Giraffe-Info.plist"; path = "Giraffe/Giraffe-Info.plist"; sourceTree = SOURCE_ROOT; };
-		BE87613E167DB88500F0AFF3 /* Point.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Point.cpp; path = ../src/Point.cpp; sourceTree = "<group>"; };
+		BE87613E167DB88500F0AFF3 /* Point.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Point.cpp; path = ../src/Point.cpp; sourceTree = "<group>"; };
 		BE87613F167DB88500F0AFF3 /* Point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Point.h; path = ../src/Point.h; sourceTree = "<group>"; };
 		BE876156167E125300F0AFF3 /* default.vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default.vert.h; sourceTree = "<group>"; };
 		BE876157167E125300F0AFF3 /* fill.frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fill.frag.h; sourceTree = "<group>"; };
@@ -154,13 +160,18 @@
 		BEA162BC165D236200855D49 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BEA162BE165D236200855D49 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BEA162C0165D236200855D49 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		BEA65C251702C8290097E355 /* Texture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Texture.cpp; path = ../src/Texture.cpp; sourceTree = "<group>"; };
+		BEA65C261702C8290097E355 /* Texture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Texture.h; path = ../src/Texture.h; sourceTree = "<group>"; };
+		BEA65C281702CB2D0097E355 /* Text.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Text.mm; sourceTree = "<group>"; };
+		BEA65C2B17032D6A0097E355 /* Text.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Text.cpp; path = ../src/Text.cpp; sourceTree = "<group>"; };
+		BEA65C2C17032D6A0097E355 /* Text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Text.h; path = ../src/Text.h; sourceTree = "<group>"; };
 		BEAD663C1674376400A2737A /* resource */ = {isa = PBXFileReference; lastKnownFileType = folder; name = resource; path = ../resource; sourceTree = "<group>"; };
 		BEAD664D16747EC000A2737A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		BEBFA13116D7534D00AA9736 /* Audio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Audio.h; sourceTree = "<group>"; };
+		BEBFA13116D7534D00AA9736 /* Audio.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; path = Audio.h; sourceTree = "<group>"; };
 		BEBFA13416D7536E00AA9736 /* Audio.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Audio.mm; sourceTree = "<group>"; };
 		BEBFA13616D7580900AA9736 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BEC8AC5516DC6B79008AF541 /* JSCContext.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = JSCContext.mm; sourceTree = "<group>"; };
-		BECC6D8C1692A10200190D12 /* stringutil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = stringutil.cpp; path = ../src/stringutil.cpp; sourceTree = "<group>"; };
+		BECC6D8C1692A10200190D12 /* stringutil.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = stringutil.cpp; path = ../src/stringutil.cpp; sourceTree = "<group>"; };
 		BECC6D8D1692A10200190D12 /* stringutil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stringutil.h; path = ../src/stringutil.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -326,6 +337,7 @@
 		BEA162AD165D236200855D49 = {
 			isa = PBXGroup;
 			children = (
+				BE6456DB171E8DCD0070DE44 /* battle */,
 				BEAD663C1674376400A2737A /* resource */,
 				BE2F4C7E16C10F5E000B2AB0 /* SpiderMonkey */,
 				BE2F4CC316C10F69000B2AB0 /* curl */,
@@ -369,6 +381,7 @@
 			children = (
 				BE876118167DB57100F0AFF3 /* global.h */,
 				BEC8AC5516DC6B79008AF541 /* JSCContext.mm */,
+				BEA65C281702CB2D0097E355 /* Text.mm */,
 				BEBFA13116D7534D00AA9736 /* Audio.h */,
 				BEBFA13416D7536E00AA9736 /* Audio.mm */,
 				BE87612A167DB5ED00F0AFF3 /* Image.mm */,
@@ -399,6 +412,8 @@
 		BEA162DD165D23D800855D49 /* Display */ = {
 			isa = PBXGroup;
 			children = (
+				BEA65C2B17032D6A0097E355 /* Text.cpp */,
+				BEA65C2C17032D6A0097E355 /* Text.h */,
 				BE719A6516A2977300A8E0E0 /* MovieClip.cpp */,
 				BE719A6416A2977300A8E0E0 /* MovieClip.h */,
 				BE87611B167DB5AA00F0AFF3 /* Image.cpp */,
@@ -407,6 +422,8 @@
 				BE87611E167DB5AA00F0AFF3 /* MatrixUtil.h */,
 				BE876123167DB5AA00F0AFF3 /* RenderContextGL2.cpp */,
 				BE876124167DB5AA00F0AFF3 /* RenderContextGL2.h */,
+				BEA65C251702C8290097E355 /* Texture.cpp */,
+				BEA65C261702C8290097E355 /* Texture.h */,
 			);
 			name = Display;
 			sourceTree = "<group>";
@@ -429,6 +446,7 @@
 				BECC6D8D1692A10200190D12 /* stringutil.h */,
 				BE2F4CD116C1FD5D000B2AB0 /* XMLHttpRequest.cpp */,
 				BE2F4CD216C1FD5D000B2AB0 /* XMLHttpRequest.h */,
+				BE5EB3171715332600649503 /* Device.h */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -491,6 +509,7 @@
 				BE2F4CC016C10F5E000B2AB0 /* js.msg in Resources */,
 				BE2F4CC116C10F5E000B2AB0 /* jsatom.tbl in Resources */,
 				BE2F4CC216C10F5E000B2AB0 /* jsproto.tbl in Resources */,
+				BE6456DC171E8DCD0070DE44 /* battle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +536,9 @@
 				BE2F4CD616C1FD7B000B2AB0 /* Http.cpp in Sources */,
 				BEBFA13516D7536E00AA9736 /* Audio.mm in Sources */,
 				BEC8AC5616DC6B7A008AF541 /* JSCContext.mm in Sources */,
+				BEA65C271702C8290097E355 /* Texture.cpp in Sources */,
+				BEA65C2A1702CB2D0097E355 /* Text.mm in Sources */,
+				BEA65C2D17032D6B0097E355 /* Text.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -594,7 +616,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../lib\"",
 					"\"$(SRCROOT)/lib\"",
 				);
 				PRODUCT_NAME = Giraffe;
@@ -615,7 +636,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../lib\"",
 					"\"$(SRCROOT)/lib\"",
 				);
 				PRODUCT_NAME = Giraffe;

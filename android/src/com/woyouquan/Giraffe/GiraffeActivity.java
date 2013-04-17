@@ -10,7 +10,6 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -22,8 +21,12 @@ import android.os.Message;
 import android.text.InputType;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.view.ScaleGestureDetector.OnScaleGestureListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
@@ -52,9 +55,7 @@ public class GiraffeActivity extends Activity {
         //android.os.Debug.waitForDebugger();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-   
+           
     	ApplicationInfo appInfo = null;
     	PackageManager packMgmr = this.getApplication().getPackageManager();
     	try
@@ -72,7 +73,7 @@ public class GiraffeActivity extends Activity {
     	
     	setContentView(R.layout.main);
     	
-        mGLView = new EAGLView(this, handler);
+        mGLView = new EAGLView(this, handler);        
         //mGLView.setOnTouchListener(new TouchListener());
         
         FrameLayout layout = (FrameLayout) findViewById(R.id.mainLayout);
@@ -128,7 +129,6 @@ public class GiraffeActivity extends Activity {
         		return false;
         	}
         });
-        
         //stringFromJNI();
     }
     
@@ -207,12 +207,19 @@ public class GiraffeActivity extends Activity {
     }
 }
 
-class EAGLView extends GLSurfaceView implements GLSurfaceView.Renderer {
+class EAGLView extends GLSurfaceView implements GLSurfaceView.Renderer, OnGestureListener, OnScaleGestureListener {
 	
 	private Handler uiHandler;
+	private GestureDetector mGesture;
+	private ScaleGestureDetector mScaleGesture;
+	private float mScale = 1.0f;
+	
 	private long time = System.currentTimeMillis();
 	private int fpCount = 0;
 	private int fps = 0;
+	
+	private static final int SWIPE_MIN_DISTANCE = 200; 
+	private static final int SWIPE_MIN_VELOCITY = 400;
 		
     private native void nativeInit();
     private native void nativeResize(int w, int h);
@@ -222,9 +229,19 @@ class EAGLView extends GLSurfaceView implements GLSurfaceView.Renderer {
 	private static native void nativeMove(float x, float y);
 	private static native void nativeUp(float x, float y);
 	
+	private static native void nativeTouch(float x, float y);
+	private static native void nativeTap(float x, float y);
+	private static native void nativeDrag(int state, float dx, float dy);
+	private static native void nativeSwipe(int direction);
+	private static native void nativePinch(float scale);
+	private static native void nativeLongPress();
+	
+	
     public EAGLView(Context context, Handler handler) {
         super(context);
         uiHandler = handler;
+        mGesture = new GestureDetector(context, this);
+        mScaleGesture = new ScaleGestureDetector(context, this);
         
         setEGLContextFactory(new ContextFactory());
         setRenderer(this);
@@ -242,8 +259,8 @@ class EAGLView extends GLSurfaceView implements GLSurfaceView.Renderer {
     }
 
 	public void onDrawFrame(GL10 gl) {
-    	nativeRender();
-    	
+		nativeRender();
+		
     	fpCount++;
     	if( (System.currentTimeMillis() - time) > 500 )
     	{
@@ -258,7 +275,7 @@ class EAGLView extends GLSurfaceView implements GLSurfaceView.Renderer {
             data.putInt("fps", fps);
             msg.setData(data);
             uiHandler.sendMessage(msg);
-    	}    	
+    	}
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
@@ -293,6 +310,13 @@ class EAGLView extends GLSurfaceView implements GLSurfaceView.Renderer {
     }
 	
     public void handleTouchEvent(MotionEvent event) {
+    	//Log.i("gesture", String.valueOf(event.getPointerCount()));
+    	if( event.getPointerCount() == 2 ) {
+    		mScaleGesture.onTouchEvent(event);
+    	}else {
+    		mGesture.onTouchEvent(event);
+    	}
+    	/*
 		float x = event.getX();
 		float y = event.getY();
 
@@ -311,7 +335,77 @@ class EAGLView extends GLSurfaceView implements GLSurfaceView.Renderer {
 			default:
 				break;
 		}
-    }	
+		*/
+    }
+    
+    @Override
+    public boolean onDown(MotionEvent e) {
+    	nativeTouch(e.getX(), e.getY());
+    	return true;
+    }
+    
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+    	if(Math.abs(velocityX) > SWIPE_MIN_VELOCITY) {
+    		if( velocityX < 0 ) {
+    			// swipe left
+    			nativeSwipe(7);
+    		}else{
+    			// swipe right
+    			nativeSwipe(8);
+    		}
+    	}else if(Math.abs(velocityX) > SWIPE_MIN_VELOCITY) { 
+    		if( velocityY < 0 ){
+    			// swipe up
+    			nativeSwipe(9);
+    		}else {
+    			// swipe down
+    			nativeSwipe(10);
+    		}
+    	}
+    	return true;
+    }
+    
+    @Override
+    public void onLongPress(MotionEvent e) {
+    	nativeLongPress();
+    }
+    
+	@Override
+	public void onShowPress(MotionEvent e) {
+		
+	}
+    
+	@Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+		//Log.i("gesture", String.format("Drag: %f,%f", distanceX, distanceY));
+    	nativeDrag(1, -distanceX, -distanceY);
+    	return true;
+    }
+    
+	@Override
+    public boolean onSingleTapUp(MotionEvent e) {
+    	nativeTap(e.getX(), e.getY());
+    	return true;
+    }
+	
+	@Override
+	public boolean onScale(ScaleGestureDetector detector) {
+		nativePinch(detector.getScaleFactor() / mScale);
+		mScale = detector.getScaleFactor();
+		return false;
+	}
+	
+	@Override
+	public boolean onScaleBegin(ScaleGestureDetector detector) {
+		mScale = 1.0f;
+		return true;
+	}
+	
+	@Override
+	public void onScaleEnd(ScaleGestureDetector detector) {
+		mScale = 1.0f;
+	}
 
     // NDK C++调用Java函数
     public void alert(String content) {

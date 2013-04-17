@@ -7,8 +7,11 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <sys/sysctl.h>
+
 #import "RootViewController.h"
 #import "MovieClip.h"
+#import "Device.h"
 
 TimerCallbackFunc static void updateFPS(void *arg) {
     RootViewController * viewController = (RootViewController *)arg;
@@ -17,13 +20,15 @@ TimerCallbackFunc static void updateFPS(void *arg) {
 
 @implementation RootViewController
 
-//@synthesize orientation = UIInterfaceOrientationLandscapeLeft;
-@synthesize orientation = UIInterfaceOrientationPortrait;
+@synthesize orientation = UIInterfaceOrientationLandscapeLeft;
+//@synthesize orientation = UIInterfaceOrientationPortrait;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
+        m_pinchScale = 1.0f;
         
         // landscape M_PI/2, default portrait
         CGRect frame = self.view.bounds;
@@ -46,10 +51,16 @@ TimerCallbackFunc static void updateFPS(void *arg) {
         
         // 坐标系变换(right,down)
         [m_glView setTransform:CGAffineTransformMakeScale(1, -1)];
-        
         [m_glView setFrameBuffer];
-        
         m_glView.multipleTouchEnabled = NO;
+        
+        Device::width = m_glView.drawableWidth;
+        Device::height = m_glView.drawableHeight;
+        
+        size_t bufSize = 128;
+        char machine[128];
+        sysctlbyname("hw.machine", machine, &bufSize, NULL, 0);
+        Device::name = machine;
         
         m_glRenderContext = RenderContextGL2::getInstance();
         
@@ -58,7 +69,7 @@ TimerCallbackFunc static void updateFPS(void *arg) {
         
         GLint maxTextureSize;
         glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
-        LOG("MaxTextureSize supported=%d", maxTextureSize);
+        LOG("MaxTextureSize supported=%d", maxTextureSize)
         
         // 显示Console调试
         m_console = [[UITextView alloc] initWithFrame:frame];
@@ -79,39 +90,61 @@ TimerCallbackFunc static void updateFPS(void *arg) {
         [self.view addSubview:m_fpsLabel];
         
         // 手势识别
-        UITapGestureRecognizer *fpsTapGesture = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(fpsTapDetected)] autorelease];
+        UITapGestureRecognizer *fpsTapGesture = [[[UITapGestureRecognizer alloc]
+                initWithTarget:self action:@selector(fpsTapDetected)] autorelease];
         [m_fpsLabel addGestureRecognizer:fpsTapGesture];
         
-        UITapGestureRecognizer *tapRecognizer = [[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(glTapDetected:)] autorelease];
+        UITapGestureRecognizer *tapRecognizer = [[[UITapGestureRecognizer alloc]
+                initWithTarget:self action:@selector(glTapDetected:)] autorelease];
         [m_glView addGestureRecognizer:tapRecognizer];
         
-        UISwipeGestureRecognizer *swipLeftRecognizer = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(glSwipLeftDetected:)] autorelease];
+        UISwipeGestureRecognizer *swipLeftRecognizer = [[[UISwipeGestureRecognizer alloc]
+                initWithTarget:self action:@selector(glSwipLeftDetected:)] autorelease];
         swipLeftRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
         swipLeftRecognizer.delegate = self;
         [m_glView addGestureRecognizer:swipLeftRecognizer];
         
-        UISwipeGestureRecognizer *swipRightRecognizer = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(glSwipRightDetected:)] autorelease];
+        UISwipeGestureRecognizer *swipRightRecognizer = [[[UISwipeGestureRecognizer alloc]
+                initWithTarget:self action:@selector(glSwipRightDetected:)] autorelease];
         swipRightRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
         swipRightRecognizer.delegate = self;
         [m_glView addGestureRecognizer:swipRightRecognizer];
         
-        UISwipeGestureRecognizer *swipDownRecognizer = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(glSwipDownDetected:)] autorelease];
+        UISwipeGestureRecognizer *swipDownRecognizer = [[[UISwipeGestureRecognizer alloc]
+                initWithTarget:self action:@selector(glSwipDownDetected:)] autorelease];
         swipDownRecognizer.direction = UISwipeGestureRecognizerDirectionUp;
         swipDownRecognizer.delegate = self;
         [m_glView addGestureRecognizer:swipDownRecognizer];
         
-        UISwipeGestureRecognizer *swipUpRecognizer = [[[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(glSwipUpDetected:)] autorelease];
+        UISwipeGestureRecognizer *swipUpRecognizer = [[[UISwipeGestureRecognizer alloc]
+                initWithTarget:self action:@selector(glSwipUpDetected:)] autorelease];
         swipUpRecognizer.direction = UISwipeGestureRecognizerDirectionDown;
         swipUpRecognizer.delegate = self;
         [m_glView addGestureRecognizer:swipUpRecognizer];
         
-        UIPanGestureRecognizer *panRecognizer = [[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(glDragDetected:)] autorelease];
+        UIPanGestureRecognizer *panRecognizer = [[[UIPanGestureRecognizer alloc]
+                initWithTarget:self action:@selector(glDragDetected:)] autorelease];
         panRecognizer.minimumNumberOfTouches = 1;
         panRecognizer.maximumNumberOfTouches = 1;
         panRecognizer.delegate = self;
         [m_glView addGestureRecognizer:panRecognizer];
         
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateFPS) userInfo:NULL repeats:YES];
+        UIPinchGestureRecognizer *pinchRecognizer = [[[UIPinchGestureRecognizer alloc]
+                initWithTarget:self action:@selector(glPinchDetected:)] autorelease];
+        pinchRecognizer.delegate = self;
+        [m_glView addGestureRecognizer:pinchRecognizer];
+        
+        UILongPressGestureRecognizer *longPressRecognizer = [[[UILongPressGestureRecognizer alloc]
+                initWithTarget:self action:@selector(glLongPressDetected:)] autorelease];
+        
+        longPressRecognizer.minimumPressDuration=1;//默认0.5秒
+        [m_glView addGestureRecognizer:longPressRecognizer];
+        
+        
+        [m_glView addGestureRecognizer:panRecognizer];
+        
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateFPS)
+                                       userInfo:NULL repeats:YES];
     }
     return self;
 }
@@ -130,7 +163,7 @@ TimerCallbackFunc static void updateFPS(void *arg) {
 
 - (void)resizeGLBuffer
 {
-    LOG("resizeGLBuffer");
+    LOG("resizeGLBuffer")
     m_glRenderContext->layout(m_glView.drawableWidth, m_glView.drawableHeight);
 }
 
@@ -185,7 +218,7 @@ TimerCallbackFunc static void updateFPS(void *arg) {
 {
     CGPoint point = [[touches anyObject] locationInView:m_glView];
     point = [self locationInGL:point];
-    TRACE("Touched (%f, %f)", point.x, point.y)
+    LOG("Touched (%f, %f)", point.x, point.y)
     
     EventManager::getInstance()->onTouch(point.x, point.y);
 }
@@ -194,53 +227,75 @@ TimerCallbackFunc static void updateFPS(void *arg) {
 {
     CGPoint point = [gestureRecognizer locationInView:m_glView];
     point = [self locationInGL:point];
-    TRACE("Taped(%f, %f)", point.x, point.y)
+    LOG("Taped(%f, %f)", point.x, point.y)
     
     EventManager::getInstance()->onTap();
 }
 
 - (void) glSwipRightDetected:(UISwipeGestureRecognizer *)gestureRecognizer
 {
-    TRACE("Swiped Right")
+    LOG("Swiped Right")
     EventManager::getInstance()->onSwipe(SwipeDirectionRight);
 }
 
 - (void) glSwipLeftDetected:(UISwipeGestureRecognizer *)gestureRecognizer
 {
-    TRACE("Swiped Left")
+    LOG("Swiped Left")
     EventManager::getInstance()->onSwipe(SwipeDirectionLeft);
 }
 
 - (void) glSwipUpDetected:(UISwipeGestureRecognizer *)gestureRecognizer
 {
-    TRACE("Swiped Up")
+    LOG("Swiped Up")
     EventManager::getInstance()->onSwipe(SwipeDirectionUp);
 }
 
 - (void) glSwipDownDetected:(UISwipeGestureRecognizer *)gestureRecognizer
 {
-    TRACE("Swiped Down")
+    LOG("Swiped Down")
     EventManager::getInstance()->onSwipe(SwipeDirectionDown);
 }
 
 - (void) glDragDetected:(UIPanGestureRecognizer *)gestureRecognizer
 {
+    //TRACE("Drag %d", [NSThread isMainThread]);
     if( gestureRecognizer.state == UIGestureRecognizerStateBegan ) {
         CGPoint point = [gestureRecognizer locationInView:m_glView];
         point = [self locationInGL:point];
-        TRACE("Move Begin (%f, %f)", point.x, point.y)
+        LOG("Drag Start (%f, %f)", point.x, point.y)
+        m_dragLastMoved = CGPointMake(0, 0);
     }
     
     CGPoint moved = [gestureRecognizer translationInView:m_glView];
     moved.x *= m_glView.layer.contentsScale;
     moved.y *= -m_glView.layer.contentsScale;
-    TRACE("Moved (%f, %f)", moved.x, moved.y)
-    EventManager::getInstance()->onDrag(moved.x, moved.y);
+    EventManager::getInstance()->onDrag(moved.x - m_dragLastMoved.x, moved.y - m_dragLastMoved.y);
+    m_dragLastMoved.x = moved.x;
+    m_dragLastMoved.y = moved.y;
+    
+    LOG("Drag (%f, %f)", moved.x - m_dragLastMoved.x, moved.y - m_dragLastMoved.y)
     
     if( gestureRecognizer.state == UIGestureRecognizerStateEnded ) {
-        TRACE("Move End")
+        LOG("Drag End")
         EventManager::getInstance()->onDragEnd();
     }
+}
+
+- (void) glPinchDetected:(UIPinchGestureRecognizer *)gestureRecognizer
+{
+    if( gestureRecognizer.state == UIGestureRecognizerStateBegan ) {
+        LOG("Pinch begin")
+        m_pinchScale = 1.0;
+    }
+    LOG("Pinch %f", gestureRecognizer.scale)
+    EventManager::getInstance()->onPinch(gestureRecognizer.scale/m_pinchScale);
+    m_pinchScale = gestureRecognizer.scale;
+}
+
+- (void) glLongPressDetected:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    LOG("LongPress")
+    EventManager::getInstance()->onLongPress();
 }
 
 - (BOOL)gestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UISwipeGestureRecognizer *)otherGestureRecognizer

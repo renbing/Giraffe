@@ -43,13 +43,18 @@ RenderContextGL2::~RenderContextGL2()
 {
 }
 
-void RenderContextGL2::layout(float width, float height)
+void RenderContextGL2::layout(float width, float height, bool flipY)
 {
     m_width = width;
     m_height = height;
     LOG("layout with widthInPixels=%f, heightInPixels=%f", m_width, m_height)
     
-    applyOrtho(0, m_width, 0, m_height);
+    glViewport(0, 0, width, height);
+    if( flipY ){
+        applyOrtho(0, width, height, 0);
+    }else{
+        applyOrtho(0, width, 0, height);
+    }
     switchToProgram(TEXTURE_PROGRAM);
 }
 
@@ -84,19 +89,19 @@ void RenderContextGL2::fillRect(const Color4f &color, float x, float y, float w,
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }
 
-void RenderContextGL2::drawRect(const Image *image, GLuint vbo)
+void RenderContextGL2::drawRect(const Texture *texture, GLuint vbo)
 {
     if (m_program != TEXTURE_PROGRAM) {
         switchToProgram(TEXTURE_PROGRAM);
     }
     
-    if( !image ) {
+    if( !texture ) {
         ERROR("RenderContextGL2 drawRect NULL Image")
         return;
     }
     
-    if( image->hasAlpha ) {
-        if( image->premultiAlpha ) {
+    if( texture->hasAlpha ) {
+        if( texture->premultiAlpha ) {
             glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
         }else {
             glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -106,7 +111,7 @@ void RenderContextGL2::drawRect(const Image *image, GLuint vbo)
     }
     
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, image->getTexture());
+    glBindTexture(GL_TEXTURE_2D, texture->getTexture());
     glUniform1i(m_uniforms[TEXTURE_PROGRAM].SAMPLER, 0);
     glUniform1f(m_uniforms[TEXTURE_PROGRAM].ALPHA, m_alphaStack[m_matrixStackIndex]);
     
@@ -209,7 +214,6 @@ void RenderContextGL2::applyOrtho(float left, float right, float bottom, float t
     float tx = - (right+left)/(right-left);
     float ty = - (top+bottom)/(top-bottom);
     
-    glViewport(0, 0, (right-left), (top-bottom));
     esLoadIdentity(&m_projectionMatrix);
     m_projectionMatrix.a = a1;
     m_projectionMatrix.d = b1;

@@ -27,14 +27,10 @@
 #include "JSCContext.h"
 #include "MovieClip.h"
 #include "RenderContextGL2.h"
+#include "Device.h"
 
 // Android资源文件zip读取全局变量
 zip *apkArchive;
-
-// OpenGL ES全局变量
-pthread_mutex_t gl_mutex;
-Image *logo = NULL;
-Bitmap *bitmap = NULL;
 
 //  暴露给Java的函数接口
 extern "C" {
@@ -46,6 +42,10 @@ extern "C" {
 */
 jobject g_jgl = NULL;
 JavaVM *g_jvm = NULL;
+
+jint JNI_OnLoad(JavaVM* vm, void* reserved) {
+    return JNI_VERSION_1_4;
+}
 
 jstring Java_com_woyouquan_Giraffe_GiraffeActivity_stringFromJNI( JNIEnv *env, jobject obj )
 {
@@ -96,18 +96,16 @@ void Java_com_woyouquan_Giraffe_EAGLView_nativeInit( JNIEnv *env , jobject jgl)
 
 void Java_com_woyouquan_Giraffe_EAGLView_nativeResize( JNIEnv *env, jobject obj, jint width, jint height )
 {
-	LOG("opengl resize: width=%d height=%d", width, height);
+	TRACE("opengl resize: width=%d height=%d", width, height);
 
-    RenderContextGL2::getInstance()->layout(width, height);
+    RenderContextGL2::getInstance()->layout(width, height, true);
+    Device::width = width;
+    Device::height = height;
 
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
-    if( !logo ) {
-        logo = new Image();
-        logo->set_src("assets/cubetexture.png");
-        bitmap = new Bitmap(logo, "bitmap");
-    }
+    JSCContext::getInstance()->run("assets/battle/");
 }
 
 void Java_com_woyouquan_Giraffe_EAGLView_nativeRender( JNIEnv *env )
@@ -115,29 +113,57 @@ void Java_com_woyouquan_Giraffe_EAGLView_nativeRender( JNIEnv *env )
     glClearColor(0, 0, 0, 1);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-    Color4f red = {1.0, 0.0, 0.0, 1.0};
-    Color4f green = {0.0, 1.0, 0.0, 1.0};
-
-    RenderContextGL2 *glRender = RenderContextGL2::getInstance();
-    glRender->fillRect(red, 0, 0, 200, 400);
-    glRender->fillRect(green, 200, 400, 200, 400);
-
-    glRender->drawRect(bitmap->getImage(), bitmap->getVBO());
+    JSCContext::getInstance()->runMainLoop();
 }
 
 void Java_com_woyouquan_Giraffe_EAGLView_nativeDown( JNIEnv *env, jobject obj, jfloat x, jfloat y )
 {
-//	CCanvas::getInstance()->onTouch(TOUCH_DOWN, x, y);
 }
 
 void Java_com_woyouquan_Giraffe_EAGLView_nativeMove( JNIEnv *env, jobject obj, jfloat x, jfloat y )
 {
-//	CCanvas::getInstance()->onTouch(TOUCH_MOVE, x, y);
 }
 
 void Java_com_woyouquan_Giraffe_EAGLView_nativeUp( JNIEnv *env, jobject obj, jfloat x, jfloat y )
 {
-//	CCanvas::getInstance()->onTouch(TOUCH_UP, x, y);
+}
+
+void Java_com_woyouquan_Giraffe_EAGLView_nativeTouch( JNIEnv *env, jobject obj, jfloat x, jfloat y )
+{
+    EventManager::getInstance()->onTouch(x, y);
+}
+
+void Java_com_woyouquan_Giraffe_EAGLView_nativeTap( JNIEnv *env, jobject obj, jfloat x, jfloat y )
+{
+    EventManager::getInstance()->onTap();
+}
+
+void Java_com_woyouquan_Giraffe_EAGLView_nativeDrag( JNIEnv *env, jobject obj, jint state, jfloat dx, jfloat dy)
+{
+    if( state == 0 ) {
+        // DragStart
+    }else if( state == 1 ) {
+        // Drag
+        EventManager::getInstance()->onDrag(dx, dy);
+    }else{
+        // DragEnd
+        EventManager::getInstance()->onDragEnd();
+    }
+}
+
+void Java_com_woyouquan_Giraffe_EAGLView_nativeSwipe( JNIEnv *env, jobject obj, jint direction)
+{
+    EventManager::getInstance()->onSwipe((SwipeDirection)direction);
+}
+
+void Java_com_woyouquan_Giraffe_EAGLView_nativePinch( JNIEnv *env, jobject obj, jfloat scale)
+{
+    EventManager::getInstance()->onPinch(scale);
+}
+
+void Java_com_woyouquan_Giraffe_EAGLView_nativeLongPress( JNIEnv *env, jobject obj)
+{
+    EventManager::getInstance()->onLongPress();
 }
 
 };

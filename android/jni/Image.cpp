@@ -147,9 +147,11 @@ void Image::createTexture(const void *input, unsigned int size)
 		}
 
         setupTexture(image_data);
-
-        LOG("Loading PNG: %s finish",filename);
-
 		delete[] image_data;
+
+        JSCContext::getInstance()->callJSFunction(onload);
+        TRACE("load Texture finished:%s", m_src.c_str());
+        TRACE("texture %d", m_texture);
+
 	}while(false);
 }

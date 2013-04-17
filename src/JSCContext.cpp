@@ -12,22 +12,38 @@
 #include "stringutil.h"
 #include "Point.h"
 #include "Image.h"
+#include "Text.h"
 #include "MovieClip.h"
 #include "Http.h"
 #include "XMLHttpRequest.h"
+#include "Audio.h"
+#include "Device.h"
 
 using std::vector;
+
+int Device::width = 0;
+int Device::height = 0;
+string Device::name = "default";
 
 // C++ 全局导出函数
 static JSBool js_trace(JSContext *cx, unsigned argc, jsval *vp ) {
     
     if (argc > 0) {
-        JSString *string = NULL;
-        JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
-        if (string) {
-            TRACE("trace: %s",JS_EncodeString(cx, string));
+        string content;
+        jsval *argv = JS_ARGV(cx, vp); \
+        for( int i=0; i<argc; i++ ){
+            content += " " + JSVAL_TO_STDSTRING(cx, argv[i]);
         }
+        
+        TRACE("trace:%s", content.c_str());
     }
+    
+    return JS_TRUE;
+}
+
+static JSBool js_getUID(JSContext *cx, unsigned argc, jsval *vp ) {
+    
+    JS_SET_RVAL(cx, vp, INT_TO_JSVAL(1));
     
     return JS_TRUE;
 }
@@ -74,17 +90,30 @@ void JSCContext::registNative()
 {
     // 注册C++全局函数
     JS_DefineFunction(m_cx, m_globalObj, "trace", js_trace, 1, JSPROP_READONLY);
+    JS_DefineFunction(m_cx, m_globalObj, "getUID", js_getUID, 0, JSPROP_READONLY);
     
     // 注册C++类
     CPoint::exportJS("Point", m_cx, m_globalObj, NULL);
     Image::exportJS("Image", m_cx, m_globalObj, NULL);
+    Text::exportJS("TextField", m_cx, m_globalObj, NULL);
     MovieClip::exportJS("MovieClip", m_cx, m_globalObj, NULL);
     Bitmap::exportJS("Bitmap", m_cx, m_globalObj, NULL);
     XMLHttpRequest::exportJS("XMLHttpRequest", m_cx, m_globalObj, NULL);
+    Audio::exportJS("Audio", m_cx, m_globalObj, NULL);
     
     // 注册C++全局对象
     JSObject *stage = JS_DefineObject(m_cx, m_globalObj, "stage", &MovieClip::js_class, NULL, JSPROP_READONLY);
     JS_SetPrivate(stage, MovieClip::stage);
+    
+    // 注册Device全局对象 Device{width, height, name}
+    jsval device = OBJECT_TO_JSVAL(JS_NewObject(m_cx, NULL, NULL, NULL));
+    jsval width = INT_TO_JSVAL(Device::width);
+    jsval height = INT_TO_JSVAL(Device::height);
+    jsval name = STDSTRING_TO_JSVAL(m_cx, Device::name);
+    JS_SetProperty(m_cx, device.toObjectOrNull(), "width", &width);
+    JS_SetProperty(m_cx, device.toObjectOrNull(), "height", &height);
+    JS_SetProperty(m_cx, device.toObjectOrNull(), "name", &name);
+    JS_SetProperty(m_cx, m_globalObj, "Device", &device);
 }
 
 void JSCContext::callJSFunction(jsval callback, unsigned int argc, jsval *argv, JSObject *caller)
@@ -93,9 +122,14 @@ void JSCContext::callJSFunction(jsval callback, unsigned int argc, jsval *argv, 
     
     JSObject *funcObj = callback.toObjectOrNull();
     if( !funcObj || !JS_ObjectIsFunction(m_cx, funcObj)) return;
+    if( !caller ){
+        caller = m_globalObj;
+    }
     
     jsval rval;
-    JS_CallFunctionValue(m_cx, caller, callback, argc, argv, &rval);
+    if( !JS_CallFunctionValue(m_cx, caller, callback, argc, argv, &rval) ) {
+        ERROR("callJSFunction fail");
+    }
 }
 
 void JSCContext::logException(JSContext *cx, const char *message, JSErrorReport *report)
@@ -112,9 +146,6 @@ bool JSCContext::run(const char *path)
     
     m_path = path;
     if( !StringUtil::startWith(m_path, "http://") ) {
-        if( !StringUtil::startWith(m_path, "/") ){
-            m_path = "/" + m_path;
-        }
         if( !StringUtil::endWith(m_path, "/") ){
             m_path += "/";
         }
@@ -123,6 +154,7 @@ bool JSCContext::run(const char *path)
 	// 下载index.js分析js文件列表(\n分割)
     string indexContent;
     if( loadFile("index.js", indexContent) <= 0 ) {
+        ERROR("JSCContet::run can't load index.js");
         return false;
     }
     
@@ -136,7 +168,7 @@ bool JSCContext::run(const char *path)
     {
         const string &jsFile = jsFiles[i];
         
-		if( jsFile.size() <= 0 )
+		if( jsFile.size() <= 0 || StringUtil::startWith(jsFile, "//") )
 		{
 			continue;
 		}
@@ -146,7 +178,6 @@ bool JSCContext::run(const char *path)
             ERROR("JSContext::run can't load js file %s", jsFile.c_str());
             continue;
         }
-		
         ok = JS_EvaluateScript(m_cx, m_globalObj, jsContent.c_str(), jsContent.size(),
                                    jsFile.c_str(), 0, &rval);
             
@@ -168,7 +199,26 @@ bool JSCContext::run(const char *path)
         return false;
     }
     
+    ok = JS_LookupProperty(m_cx, m_globalObj, "onPinch", &m_onPinch);
+    if( !ok || JSVAL_IS_VOID(m_onPinch) ) {
+        ERROR("jsError: no onPinch function");
+        return false;
+    }
+    
     return true;
+}
+
+void JSCContext::addToSlot(JSObject *obj, const char *name, JSObject *value)
+{
+    JSObject *slot = JSVAL_TO_OBJECT(JS_GetReservedSlot(obj, 0));
+    jsval jsvalValue = OBJECT_TO_JSVAL(value);
+    JS_SetProperty(m_cx, slot, name, &jsvalValue);
+}
+
+void JSCContext::removeFromSlot(JSObject *obj, const char *name)
+{
+    JSObject *slot = JSVAL_TO_OBJECT(JS_GetReservedSlot(obj, 0));
+    JS_DeleteProperty(m_cx, slot, name);
 }
 
 jsval JSCContext::createEvent(const Event *e)
@@ -210,6 +260,12 @@ void JSCContext::runMainLoop()
     Http::getInstance()->update();
     
     JS_GC(m_rt);
+}
+
+void JSCContext::onPinch(float scale)
+{
+    jsval args[] = {DOUBLE_TO_JSVAL(scale)};
+    callJSFunction(m_onPinch, 1, args);
 }
 
 int JSCContext::loadFile(const string &file, string &content)

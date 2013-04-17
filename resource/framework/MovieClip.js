@@ -1,4 +1,38 @@
 
+function TextField() {
+    this.width = 128;
+    this.POTWidth = 128;
+    this.height = 128;
+    this.POTHeight = 128;
+    this.color = 'red';
+    this.align = 'center';
+    this.font = '24px sans-serif';
+    this.text = 'default';
+
+    this.texture = 0;
+}
+
+TextField.prototype = {
+    render: function() {
+        //var canvas = document.getElementById("canvas");
+        var canvas = document.createElement("canvas");
+        canvas.width = this.width;
+        canvas.height = this.height;
+
+        var ctx = canvas.getContext('2d');
+        ctx.font = this.font;
+        ctx.textAlign = this.align;
+        var dx = 0;
+        if( this.align == "center" ) {
+            dx = this.width / 2 ; 
+        }
+        ctx.fillStyle = this.color;
+        ctx.fillText(this.text, dx, parseInt(this.font));
+
+        resourceManager.createTexture(this, canvas);
+    }
+};
+
 function DisplayObject() {
     this.name = "";
 
@@ -104,8 +138,8 @@ function Bitmap(image, name, sx, sy, sw, sh, width, height) {
 
     var uv = [  sx/this.image.POTWidth,      sy/this.image.POTHeight, 
                 (sx+sw)/this.image.POTWidth, sy/this.image.POTHeight,
-                sx/this.image.POTWidth,      (sy+sw)/this.image.POTHeight,
-                (sx+sw)/this.image.POTWidth, (sy+sw)/this.image.POTHeight];
+                sx/this.image.POTWidth,      (sy+sh)/this.image.POTHeight,
+                (sx+sw)/this.image.POTWidth, (sy+sh)/this.image.POTHeight];
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(uv), gl.STATIC_DRAW);
     this.tbo.itemSize = 2;

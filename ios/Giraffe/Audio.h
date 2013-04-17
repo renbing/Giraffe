@@ -9,18 +9,16 @@
 #ifndef __Giraffe__Audio__
 #define __Giraffe__Audio__
 
-#import <AVFoundation/AVFoundation.h>
 #import <string>
 #import "JSCContext.h"
 
 using std::string;
 
-
 class Audio
 {
 private:
     string m_src;
-    AVAudioPlayer *m_player;
+    void *m_player;
     
     bool m_playing;
     
@@ -28,6 +26,8 @@ private:
     bool m_muted;
     bool m_loop;
     bool m_autoplay;
+public:
+    JSObject *jsthis;
     
 public:
     Audio();
@@ -35,24 +35,13 @@ public:
     
     JS_CLASS_EXPORT_DEF
     
-    void set_volume(float volume) {
-        m_volume = volume;
-        float realVolume = m_muted ? 0.0 : m_volume;
-        [m_player setVolume:realVolume];
-    }
+    void set_volume(float volume);
     float get_volume() { return m_volume; }
     
-    void set_muted(float muted) {
-        m_muted = muted;
-        float realVolume = m_muted ? 0.0 : m_volume;
-        [m_player setVolume:realVolume];
-    }
+    void set_muted(bool muted);
     bool get_muted() { return m_muted; }
     
-    void set_loop(bool loop) {
-        m_loop = loop;
-        [m_player setNumberOfLoops:(m_loop ? -1 : 0)];
-    }
+    void set_loop(bool loop);
     bool get_loop() { return m_loop; }
     
     void set_autoplay(bool autoplay) { m_autoplay = autoplay; }

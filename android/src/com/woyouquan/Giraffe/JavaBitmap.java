@@ -138,7 +138,7 @@ public class JavaBitmap {
 				float fontSize, String fontSizeUnit, int textColor, boolean bold, boolean italic) {
     	TextView textView = new TextView(mContext); 
     	textView.layout(0, 0, w, h);
-
+    	//Log.w("text", fontSizeUnit);
     	int hGravity = Gravity.LEFT;
     	if( textAlign.equalsIgnoreCase("end") || textAlign.equalsIgnoreCase("right") )
     	{
@@ -151,6 +151,7 @@ public class JavaBitmap {
     	textView.setGravity(hGravity);
     	
     	int unit = TypedValue.COMPLEX_UNIT_PX;
+
     	if( fontSizeUnit.equalsIgnoreCase("pt") )
     	{
     		unit = TypedValue.COMPLEX_UNIT_PT;

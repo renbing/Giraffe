@@ -3,6 +3,7 @@ package com.woyouquan.Giraffe;
 import java.io.IOException;
 
 import android.content.Context;
+import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
@@ -35,7 +36,7 @@ public class JavaAudioPlayer implements OnPreparedListener, OnCompletionListener
     	
     	mPlayerPrepared = false;
     	mPlaying = false;
-    	mAutoplay = false;
+    	mAutoplay = true;
     	mLoop = false; 
     	mVolume = 1.0f;
     	
@@ -45,6 +46,10 @@ public class JavaAudioPlayer implements OnPreparedListener, OnCompletionListener
 
     public void setSource(String path) {
     	
+    	if( path.startsWith("assets/")) {
+    		path = path.substring(7);
+    	}
+    	
     	mSource = path;
     	mPlayer.reset();
 
@@ -52,12 +57,15 @@ public class JavaAudioPlayer implements OnPreparedListener, OnCompletionListener
 		mSoundStreamID = 0;
 		mSoundPool.unload(mSoundID);
 		mSoundID = 0;
-		
-		setLoop(mLoop);
-		setVolume(mVolume);
     	
     	try {
-			mPlayer.setDataSource(path);
+    		if( path.startsWith("http://") ){
+    			mPlayer.setDataSource(mSource);
+    		}else{
+    			AssetFileDescriptor fd = mContext.getResources().getAssets().openFd(mSource);
+    			mPlayer.setDataSource(fd.getFileDescriptor(), fd.getStartOffset(), fd.getLength());
+    		}
+			
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalStateException e) {
@@ -74,9 +82,16 @@ public class JavaAudioPlayer implements OnPreparedListener, OnCompletionListener
     
     public void setLoop(boolean loop) {
     	mLoop = loop;
-    	mPlayer.setLooping(mLoop);
-    	int loopMode = mLoop ? -1 : 0;
-    	mSoundPool.setLoop(mSoundStreamID, loopMode);
+		if( mSoundStreamID > 0 )
+		{
+	    	int loopMode = mLoop ? -1 : 0;
+	    	mSoundPool.setLoop(mSoundStreamID, loopMode);
+		}
+		else if( mPlayerPrepared )
+		{
+			mPlayer.pause();
+			mPlayer.setLooping(mLoop);
+		}
     }
     
     public void setAutoplay(boolean autoplay) {
@@ -95,10 +110,14 @@ public class JavaAudioPlayer implements OnPreparedListener, OnCompletionListener
     
 	public void onPrepared(MediaPlayer mp) {
 		
-		if( mp.getDuration() < 3000 )
+		if( mp.getDuration() < 5000 )
 		{
 			// 短音
-			mSoundID = mSoundPool.load(mSource, 1);
+			try {
+				mSoundID = mSoundPool.load(mContext.getResources().getAssets().openFd(mSource), 1);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			mp.reset();
 			return;
 		}
@@ -143,8 +162,14 @@ public class JavaAudioPlayer implements OnPreparedListener, OnCompletionListener
 	
 	public void setVolume(float volume) {
 		mVolume = volume;
-		mPlayer.setVolume(volume, volume);
-		mSoundPool.setVolume(mSoundStreamID, volume, volume);
+		if( mSoundStreamID > 0 )
+		{
+			mSoundPool.setVolume(mSoundStreamID, volume, volume);
+		}
+		else if( mPlayerPrepared )
+		{
+			mPlayer.setVolume(volume, volume);
+		}
 	}
 	
 	public void release() {
@@ -155,6 +180,9 @@ public class JavaAudioPlayer implements OnPreparedListener, OnCompletionListener
 	}
 
 	public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+		setLoop(mLoop);
+		setVolume(mVolume);
+		
 		if( mPlaying || mAutoplay )
 		{
 			play();
