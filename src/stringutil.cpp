@@ -163,6 +163,18 @@ void StringUtil::split(const string& line, const string& segmentor, vector<strin
 	}
 }
 
+void StringUtil::join(vector<string>& segs, const string &segmentor, string &line)
+{
+    line.clear();
+
+    for( int i=0; i<segs.size(); i++ ) {
+        if( i > 0 ) {
+            line.append(segmentor);
+        }
+        line.append(segs[i]);
+    }
+}
+
 bool StringUtil::convertHTMLColor(const string &style, unsigned int &color)
 {
 	const char *normalColors[] = {

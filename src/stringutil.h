@@ -42,6 +42,8 @@ int loadContentsOfURL(const string &url, string &content);
 
 void split(const string& line, const string& segmentor, vector<string>& segs);
 
+void join(vector<string>& segs, const string& segmentor, string& line);
+
 bool convertHTMLColor(const string &style, unsigned int &color);
 
     

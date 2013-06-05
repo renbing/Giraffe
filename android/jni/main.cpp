@@ -105,7 +105,7 @@ void Java_com_woyouquan_Giraffe_EAGLView_nativeResize( JNIEnv *env, jobject obj,
     glDisable(GL_DEPTH_TEST);
     glDisable(GL_CULL_FACE);
 
-    JSCContext::getInstance()->run("assets/battle/");
+    JSCContext::getInstance()->run("assets/hunimei/");
 }
 
 void Java_com_woyouquan_Giraffe_EAGLView_nativeRender( JNIEnv *env )
