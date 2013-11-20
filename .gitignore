@@ -4,7 +4,7 @@
 .DS_Store
 *.bak
 
-android/assets/battle
+android/*
 android/bin
 android/libs
 android/obj

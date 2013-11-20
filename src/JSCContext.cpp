@@ -54,7 +54,7 @@ static void JS_FinalizeStub(JSFreeOp *freeOp, JSObject *obj) {
 
 static JSClass globalClass = {
     "global", JSCLASS_GLOBAL_FLAGS,
-    JS_PropertyStub, JS_PropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
+    JS_PropertyStub, JS_DeletePropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
     JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub, JS_FinalizeStub,
     JSCLASS_NO_OPTIONAL_MEMBERS
 };
@@ -63,9 +63,7 @@ JSCContext * JSCContext::m_instance = NULL;
 
 JSCContext::JSCContext()
 {
-    JS_SetCStringsAreUTF8();
-    
-    m_rt = JS_NewRuntime(10 * 1024 * 1024);
+    m_rt = JS_NewRuntime(10 * 1024 * 1024, JS_USE_HELPER_THREADS);
     m_cx = JS_NewContext(m_rt, 10240);
     
     JS_SetOptions(m_cx, JSOPTION_TYPE_INFERENCE);

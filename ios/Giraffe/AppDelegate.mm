@@ -32,7 +32,7 @@
     [self.window makeKeyAndVisible];
     [viewController startAnimation];
     
-    JSCContext::getInstance()->run("/battle/");
+    JSCContext::getInstance()->run("/assets/battle/");
     //JSCContext::getInstance()->run("/resource/warcraft/");
     //JSCContext::getInstance()->run("http://192.168.1.127/renbing/battle/");
     

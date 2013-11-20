@@ -95,7 +95,6 @@ inline jsval STDSTRING_TO_JSVAL(JSContext *cx, const string &v)
     JSString *str = JS_NewStringCopyZ(cx, v.c_str());
     if( str == NULL ){
         //str = JS_NewUCStringCopyZ(cx, (jschar *)v.c_str());
-        int i=0;
     }
     return STRING_TO_JSVAL(str);
 }
@@ -209,7 +208,7 @@ JS_PROPERTY_WRITE_SLOT(className, varType, varName)
 template<class T>
 static void js_destructor(JSFreeOp *freeOp, JSObject *obj)
 {
-    TRACE("GC ");
+    //TRACE("GC ");
     T *cobj = static_cast<T*>(JS_GetPrivate(obj));
     if( cobj ) {
         delete cobj;
@@ -242,10 +241,10 @@ static JSBool js_constructor(JSContext *cx, unsigned argc, jsval *vp) {
 }
 
 #define JS_FN_DEF(className, funcName, argc) \
-JS_FN(#funcName, js_func_##className##_##funcName, argc, JSPROP_PERMANENT | JSPROP_SHARED)
+JS_FN(#funcName, js_func_##className##_##funcName, argc, JSPROP_PERMANENT | JSPROP_ENUMERATE)
 
 #define JS_SFN_DEF(className, funcName, argc) \
-JS_FN(#funcName, js_sfunc_##className##_##funcName, argc, JSPROP_PERMANENT | JSPROP_SHARED)
+JS_FN(#funcName, js_sfunc_##className##_##funcName, argc, JSPROP_PERMANENT | JSPROP_ENUMERATE)
 
 #define JS_SIMPLE_FUNC(className, funcName, returnType)\
 static JSBool js_func_##className##_##funcName(JSContext *cx, unsigned argc, jsval *vp) { \
@@ -357,7 +356,7 @@ static void exportJS(const char *name, JSContext *cx, JSObject *pobj, JSObject *
 #define JS_CLASS_EXPORT(className) \
 JSClass className::js_class = { \
     "", JSCLASS_HAS_PRIVATE | JSCLASS_HAS_RESERVED_SLOTS(1), \
-    JS_PropertyStub,JS_PropertyStub,JS_PropertyStub,JS_StrictPropertyStub, \
+    JS_PropertyStub,JS_DeletePropertyStub,JS_PropertyStub,JS_StrictPropertyStub, \
     JS_EnumerateStub,JS_ResolveStub,JS_ConvertStub,js_destructor<className>, \
     JSCLASS_NO_OPTIONAL_MEMBERS \
 }; \

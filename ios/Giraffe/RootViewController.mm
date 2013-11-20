@@ -145,6 +145,7 @@ TimerCallbackFunc static void updateFPS(void *arg) {
         
         [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateFPS)
                                        userInfo:NULL repeats:YES];
+        
     }
     return self;
 }
